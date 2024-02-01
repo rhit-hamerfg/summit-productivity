@@ -1,12 +1,134 @@
+:root {
+    --summit-blue: #4682B4;
+    --summit-white: #EEEEEE;
+    --background-color: #232323;
+}
+
 body {
-    background: #DDDDDD;
+    background: var(--background-color);
 }
 
 .navbar {
-    background-color: #800000;
-    color: white;
+    background-color: var(--summit-blue);
+    color: #EEEEEE;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .page-container {
     margin-top: 75px;
 }
+
+#summitLogo {
+    height: 3rem;
+    width: auto;
+}
+
+#summitLogoText {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.dropdown-menu {
+    left: -128px;
+    background-color: var(--summit-white);
+    color: var(--background-color);
+}
+
+#topNavbar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-basis: auto;
+    gap: 1em;
+}
+
+#bottomNavbar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex-basis: auto;
+    flex-grow: 1;
+    gap: 20px;
+}
+
+.navBarTopButton {
+    width: 12rem;
+    height: 3.5rem;
+    border: 3px solid;
+    margin: 8px 0;
+    border-radius: 30px;
+    border-color: var(--summit-white);
+    background-color: var(--summit-blue);
+    color: var(--summit-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+
+.navBarBottomButton {
+    width: 7rem;
+    height: 3.5rem;
+    padding: auto;
+    border: 3px solid;
+    border-radius: 40px;
+    border-color: var(--summit-white);
+    background-color: var(--summit-blue);
+    color: var(--summit-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#navBarTopButton:active {
+    transform: translateY(2px);
+    opacity: 0.5;
+}
+
+.navBarBottomButton i {
+    width: max-content;
+    height: max-content;
+}
+
+.page-container {
+    display: flex;
+}
+
+#todoBlock {
+    width: 0.47rem;
+    height: auto;
+    background-color: var(--summit-blue);
+}
+
+.navBarIcons {
+    color: var(--summit-white);
+    vertical-align: baseline;
+}
+
+@media (max-width: 888px) {
+    .navBarTopButton {
+        display: none;
+    }
+
+    #topNavbar {
+        justify-content: space-between;
+    }
+
+    #bottomNavbar {
+        display: flex;
+    }
+
+    #summitLogoText {
+        left: 0.5vw;
+    }
+}
+
+@media (min-width: 889px) {
+    .navBarBottomButton {
+        display: none;
+    }
+    #bottomNavbar {
+        display: none;
+    }
+}
+
