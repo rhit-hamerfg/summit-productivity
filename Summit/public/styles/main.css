@@ -120,7 +120,7 @@ a.button {
 #topNavbar {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-grow: 1;
     flex-basis: auto;
     gap: 1em;
@@ -153,7 +153,7 @@ a.button {
 } */
 
 .navBarTopButton {
-    width: 12rem;
+    width: 20rem;
     height: 3.5rem;
     border: 3px solid;
     margin: 8px 0;
@@ -215,9 +215,17 @@ a.button {
     }
 
     #topNavbar {
-        justify-content: space-between;
+        justify-content: center;
         background-color: var(--background-color);
         border: none;
+    }
+
+    .dropdown-menu {
+        left: -65vw;
+        width: 90vw;
+        margin-top: 50px !important;
+        background-color: var(--summit-white);
+        color: var(--background-color);
     }
 
     #bottomNavbar {
