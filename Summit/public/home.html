@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link id="tabIcon" rel="icon" type="image/png" href="images/summitLogo.png">
+  <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <title>Summit</title>
+</head>
+
+<body>
+  <nav id="topNavbar" class="navbar navbar-dark fixed-top">
+    <a id="summitLogoText" class="navbar-brand" href="#">Summit&nbsp;&nbsp;<img id="summitLogo"
+        src="images/summitLogo.png" alt="Summit Logo"></a>
+    <!-- <span id="topNavbarButtons"> -->
+    <button class="navBarTopButton"><i class="material-icons navBarIcons">home</i>&nbsp;&nbsp;Home</button>
+    <button class="navBarTopButton"><i class="material-icons navBarIcons">list</i>&nbsp;&nbsp;To-Do</button></a>
+    <button class="navBarTopButton"><i class="material-icons navBarIcons">apps</i>&nbsp;&nbsp;Habits</button></a>
+    <button class="navBarTopButton"><i class="material-icons navBarIcons">task_alt</i>&nbsp;&nbsp;Goals</button></a>
+    <button class="navBarTopButton"><i class="material-icons navBarIcons">visibility</i>&nbsp;&nbsp;Focus</button></a>
+    <!-- </span> -->
+    <div class="dropdown pull-xs-right">
+      <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="lr1" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="true">
+        <i class="material-icons">menu</i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <button id="allPhotos" type="button" class="dropdown-item menuButton" data-toggle="modal"
+          data-target="#editImage"><i class="material-icons">account_circle</i>&nbsp;&nbsp;Account</button>
+        <button style="border-radius: 0px;" id="signOut" type="button" class="dropdown-item menuButton"><i
+            class="material-icons">logout</i>&nbsp;&nbsp;Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mainPage" class="container page-container">
+
+    <div class="flex-container">
+      <div id="todoBlock"></div>
+      <div id="habitsBlock"></div>
+    </div>
+
+  </div>
+
+  <footer id="bottomNavbar" class="fixed-bottom">
+    <button style="background-color: #EEEEEE;" class="navBarBottomButton"><i style="color: #4682B4;" class="material-icons navBarIcons">home</i></button>
+    <button class="navBarBottomButton"><i class="material-icons navBarIcons">list</i></button>
+    <button class="navBarBottomButton"><i class="material-icons navBarIcons">apps</i></button>
+    <button class="navBarBottomButton"><i class="material-icons navBarIcons">task_alt</i></button>
+    <button class="navBarBottomButton"><i class="material-icons navBarIcons">visibility</i></button>
+  </footer>
+
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/popper.js"></script>
+  <script src="scripts/bootstrap-material-design.js"></script>
+  <script>$("body").bootstrapMaterialDesign();</script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>
