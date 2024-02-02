@@ -17,11 +17,6 @@
 </head>
 
 <body>
-  <!-- <nav id="topNavbar" class="navbar navbar-dark fixed-top">
-    <a id="summitLogoText" class="navbar-brand" href="#">Summit&nbsp;&nbsp;<img id="summitLogo"
-        src="images/summitLogo.png" alt="Summit Logo"></a>
-  </nav> -->
-
   <div>
     <p id="loginHeader">Summit&nbsp;&nbsp;<img id="summitLogo" src="images/summitLogo.png">&nbsp;&nbsp;&nbsp;&nbsp;<span
         id="motto">Building a Better Tomorrow by Building a Better You</span></p>
@@ -37,14 +32,13 @@
 
   <div class="loginPage">
     <div class="infoInput">
-      <div class="form-group">
+      <div class="inputField">
+        <label for="inputEmail">Email:</label>
         <input type="email" class="form-control" id="inputEmail">
-        <label for="inputEmail">Email</label>
       </div>
-
-      <div class="form-group">
+      <div class="inputField">
+        <label for="inputPassword">Password:</label>
         <input type="password" class="form-control" id="inputPassword">
-        <label for="inputPassword">Password</label>
       </div>
     </div>
     <div id="accountButtons">
@@ -53,7 +47,6 @@
       <div><button id="login" type="button" class="btn buttonHover">Create Account</button></div>
       <div id="firebaseui-auth-container"></div>
     </div>
-
   </div>
 
 

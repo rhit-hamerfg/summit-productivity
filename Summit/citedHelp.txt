@@ -2,3 +2,5 @@ https://stackoverflow.com/questions/55756940/how-to-center-the-icon-in-the-butto
 https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 https://stackoverflow.com/questions/31217268/center-div-on-the-middle-of-screen
 https://www.youtube.com/watch?v=SgmNxE9lWcY&t=283s
+https://stackoverflow.com/questions/12031618/how-to-make-a-page-unscrollable
+https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp

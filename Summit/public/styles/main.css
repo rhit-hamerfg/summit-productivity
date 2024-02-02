@@ -1,23 +1,23 @@
 :root {
-    --summit-blue: #4682B4;
+    --navbar-purple: #1d1160;
+    --summit-blue: #201c61;
     --summit-white: #EEEEEE;
     --background-color: #232323;
 }
 
 body {
-    background: var(--background-color);
+    /* background: var(--background-color); */
+    background: rgb(17, 17, 17);
+    background: linear-gradient(0deg, rgba(17, 17, 17, 1) 25%, rgba(22, 15, 64, 1) 100%);
+    height: 100vh;
+    overflow: hidden;
 }
 
 .navbar {
-    background-color: var(--summit-blue);
+    background-color: #160F3D;
     color: #EEEEEE;
     font-family: 'Comfortaa', sans-serif;
     font-weight: 700;
-}
-
-a.button {
-    text-decoration: none;
-    display: inline-block;
 }
 
 .page-container {
@@ -40,7 +40,7 @@ a.button {
     color: var(--background-color);
 }
 
-#loginHeader{
+#loginHeader {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,28 +62,43 @@ a.button {
     font-weight: 400;
 }
 
-.loginPage{
-    background-color: var(--summit-blue);
+.loginPage {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     flex-direction: column;
-    min-height: 70vh;
-    min-width: 50vw;
-    margin: 5vh 25vw 5vh 25vw;
+    max-height: 800px;
+    height: 100vh;
+    max-width: auto;
+    margin: 150px;
     border-radius: 50px;
     padding: 40px;
 }
 
-.loginPage > * {
-    margin: 30px;
+.inputField {
+    color: var(--summit-white);
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 300;
+    margin: 15px;
+}
+
+.inputField:active input {
+    color: white;
+}
+
+.form-control {
+    color: var(--summit-white) !important;
+    text-align: center;
+    width: 300px;
 }
 
 #accountButtons {
     display: flex;
     justify-content: center;
     gap: 20px;
+    margin-top: 30px;
 }
 
 #accountButtons button {
@@ -102,20 +117,6 @@ a.button {
     color: var(--summit-blue);
 }
 
-.form-control {
-    font-family: 'Confortaa', sans-serif !important;
-    color: var(--summit-white) !important;
-}
-
-.form-group label{
-    color: white;
-    font-family: 'Comfortaa', sans-serif;
-    font-size: 1rem;
-}
-
-.form-control:active {
-    color: var();
-}
 
 #topNavbar {
     display: flex;
@@ -153,13 +154,13 @@ a.button {
 } */
 
 .navBarTopButton {
-    width: 20rem;
+    background-color: #1d116000;
+    width: 25rem;
     height: 3.5rem;
     border: 3px solid;
     margin: 8px 0;
     border-radius: 30px;
     border-color: var(--summit-white);
-    background-color: var(--summit-blue);
     color: var(--summit-white);
     display: flex;
     justify-content: center;
@@ -170,6 +171,10 @@ a.button {
 
 .navBarTopButton:hover {
     background-color: var(--summit-white);
+    color: var(--summit-blue);
+}
+
+.navBarTopButton:hover i {
     color: var(--summit-blue);
 }
 
@@ -185,22 +190,8 @@ a.button {
     align-items: center;
 }
 
-.dropdown-menu-right{
+.dropdown-menu-right {
     border-radius: 30px;
-}
-
-.navBarIcons:hover {
-    color: var(--summit-blue);
-}
-
-.page-container {
-    display: flex;
-}
-
-#todoBlock {
-    width: 0.47rem;
-    height: auto;
-    background-color: var(--summit-blue);
 }
 
 .navBarIcons {
@@ -208,6 +199,86 @@ a.button {
     vertical-align: baseline;
 }
 
+#homePage {
+    display: flex;
+    font-family: 'Comfortaa', sans-serif;
+    text-align: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: var(--summit-white);
+}
+
+.elementBlockContainerHome {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    margin: 50px;
+    margin-top: 100px;
+    height: 90vh;
+    
+}
+
+.halfElementBlockContainerHome {
+    background-color: var(--summit-blue);
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0;
+    border-radius: 50px;
+    flex-grow: 1;
+    height: auto;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.halfElementBlockContainerHome::-webkit-scrollbar {
+    display: none;
+    scroll-behavior: smooth;
+  }
+
+.quarterElementBlockContainerHome {
+    background-color: var(--summit-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 50px;
+    border-radius: 50px;
+    flex-grow: 1;
+}
+
+.itemElement {
+    border-radius: 40px;
+    border: 3px solid;
+    border-color: #160f3d00;
+    text-align: center;
+    padding: 30px;
+    background-color: #160F3D;
+    margin: 20px;
+    width: auto;
+    height: auto;
+    transition: all 0.4s;
+}
+
+.itemElement:hover {
+    border-color: var(--summit-white);
+}
+
+#welcomeBlock {
+    width: auto;
+    font-size: 3.3rem;
+    font-weight: 900;
+    text-align: center;
+    margin-left: 50px;
+    text-align: left;
+}
+
+#todoHeader {
+    font-size: 2.5rem;
+    font-weight: 750;
+}
 
 @media (max-width: 888px) {
     .navBarTopButton {
@@ -216,7 +287,6 @@ a.button {
 
     #topNavbar {
         justify-content: center;
-        background-color: var(--background-color);
         border: none;
     }
 
@@ -237,9 +307,19 @@ a.button {
         font-weight: 500;
         margin: 50px;
     }
+
     #motto {
         font-size: 1rem;
         font-weight: 250;
+    }
+
+    #accountButtons {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .loginPage {
+        margin: 75px;
     }
 }
 
@@ -247,6 +327,7 @@ a.button {
     .navBarBottomButton {
         display: none;
     }
+
     #bottomNavbar {
         display: none;
     }
@@ -256,6 +337,7 @@ a.button {
     #bottomNavbar {
         gap: 5px;
     }
+
     .navBarBottomButton {
         border-radius: 50px;
         gap: 5px;
@@ -266,6 +348,7 @@ a.button {
     #loginHeader {
         display: none;
     }
+
     .loginHeaderSmall {
         display: flex;
         flex-direction: column;
@@ -276,13 +359,10 @@ a.button {
         margin: 30px;
         text-align: center;
     }
+
     .loginPage {
         margin: 30px;
-        max-height: 70vh;
+        max-height: auto;
     }
-    #accountButtons {
-        flex-direction: column;
-        flex-wrap: wrap;
-    }
-}
 
+}
