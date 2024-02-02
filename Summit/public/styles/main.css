@@ -51,6 +51,7 @@ body {
     font-family: 'Comfortaa', sans-serif;
     font-weight: 700;
     margin: 75px;
+    margin-bottom: 0;
 }
 
 .loginHeaderSmall {
@@ -71,7 +72,6 @@ body {
     max-height: 800px;
     height: 100vh;
     max-width: auto;
-    margin: 150px;
     border-radius: 50px;
     padding: 40px;
 }
@@ -82,6 +82,8 @@ body {
     font-size: 0.5rem;
     font-weight: 300;
     margin: 15px;
+    border-bottom: 2px solid;
+    border-color: var(--summit-white);
 }
 
 .inputField:active input {
