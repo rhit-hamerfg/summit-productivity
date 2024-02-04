@@ -213,12 +213,55 @@ body {
 
 #habitsPage {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     font-family: 'Comfortaa', sans-serif;
     text-align: center;
     flex-wrap: nowrap;
     justify-content: center;
-    margin: 0;
+    height: 100vh;
+}
+
+#habitsList {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 0;
+}
+
+#habitsHeader {
+    text-align: center;
+    background-color: transparent;
+    width: auto;
+    height: auto;
+    color: var(--summit-white);
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 15px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#habitsHeader button {
+    background-color: #1d116000;
+    font-family: 'Comfortaa', sans-serif;
+    width: 10rem;
+    height: 3rem;
+    border: 3px solid;
+    margin: 0 40px;
+    border-radius: 30px;
+    border-color: var(--summit-white);
+    color: var(--summit-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: all 0.4s;
 }
 
 .elementBlockContainerHome {
@@ -239,12 +282,22 @@ body {
     height: 90vh;
 }
 
+.elementBlockContainerGoals {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    margin: 50px;
+    height: 90vh;
+}
+
 .elementBlockContainterHabits {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     flex-grow: 1;
     margin: 50px;
+    margin-top: 0;
     height: 90vh;
     width: 100%;
 }
@@ -258,6 +311,21 @@ body {
     border-radius: 50px;
     flex-grow: 1;
     height: auto;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.halfElementBlockContainerHabits {
+    /* background-color: var(--summit-blue); */
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0 0 0;
+    border-radius: 50px;
+    flex-grow: 1;
+    height: 100%;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -279,12 +347,37 @@ body {
     scroll-behavior: smooth;
 }
 
+.halfElementBlockContainerGoals {
+    /* background-color: var(--summit-blue); */
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-radius: 50px;
+    flex-grow: 1;
+    height: auto;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.halfElementBlockContainerGoals::-webkit-scrollbar {
+    display: none;
+    scroll-behavior: smooth;
+  }
+
 .halfElementBlockContainerHome::-webkit-scrollbar {
     display: none;
     scroll-behavior: smooth;
   }
 
-  .halfElementBlockContainerTodo::-webkit-scrollbar {
+.halfElementBlockContainerHabits::-webkit-scrollbar {
+    display: none;
+    scroll-behavior: smooth;
+  }
+
+.halfElementBlockContainerTodo::-webkit-scrollbar {
     display: none;
     scroll-behavior: smooth;
   }
@@ -432,6 +525,19 @@ body {
     margin-top: 50px;
 }
 
+#goalsHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: max-content;
+    flex-shrink: 1;
+    text-align: center;
+    margin-top: 15px;
+}
+
 #todoHeaderHome {
     display: flex;
     flex-wrap: nowrap;
@@ -457,7 +563,37 @@ body {
     margin-bottom: 0;
 }
 
+#goalsHeaderText {
+    text-align: center;
+    background-color: #160F3D;
+    width: auto;
+    height: auto;
+    color: var(--summit-white);
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 15px;
+    margin-bottom: 0;
+}
+
 #addTodo {
+    background-color: #1d116000;
+    font-family: 'Comfortaa', sans-serif;
+    width: 10rem;
+    height: 3rem;
+    border: 3px solid;
+    margin: 0 40px;
+    border-radius: 30px;
+    border-color: var(--summit-white);
+    color: var(--summit-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    transition: all 0.4s;
+}
+
+#addGoal {
     background-color: #1d116000;
     font-family: 'Comfortaa', sans-serif;
     width: 10rem;
@@ -512,7 +648,28 @@ body {
     flex-grow: 1;
     flex-shrink: 1;
     text-align: center;
+}
 
+.habitItemElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: transparent;
+    align-items: center;
+    width: auto;
+    flex-shrink: 1;
+    text-align: center;
+}
+
+.goalsItemElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: transparent;
+    align-items: center;
+    width: auto;
+    flex-shrink: 1;
+    text-align: center;
 }
 
 .toDoItemText {
@@ -532,7 +689,49 @@ body {
     transition: all 0.4s;
 }
 
+.habitItemText {
+    border-radius: 40px;
+    border: 3px solid;
+    border-color: #160f3d00;
+    text-align: center;
+    padding: 15px;
+    /* background-color: #160f3d77; */
+    background: rgb(85,27,200);
+    margin: 20px;
+    width: 100%;
+    height: auto;
+    transition: all 0.4s;
+    color: var(--summit-white);
+    font-family: 'Comfortaa', sans-serif;
+    transition: all 0.4s;
+}
+
+.goalsItemText {
+    border-radius: 40px;
+    border: 3px solid;
+    border-color: #160f3d00;
+    text-align: center;
+    padding: 15px;
+    /* background-color: #160f3d77; */
+    background: rgb(85,27,200);
+    margin: 20px;
+    width: 100%;
+    height: auto;
+    transition: all 0.4s;
+    color: var(--summit-white);
+    font-family: 'Comfortaa', sans-serif;
+    transition: all 0.4s;
+}
+
 .toDoItemText:hover {
+    border-color: var(--summit-white);
+}
+
+.goalsItemText:hover {
+    border-color: var(--summit-white);
+}
+
+.habitItemText:hover {
     border-color: var(--summit-white);
 }
 
@@ -627,6 +826,7 @@ body {
 .streakbox {
     color: var(--summit-white);
     font-family: 'Chakra Petch', sans-serif;
+    font-weight: 500;
     font-size: 2rem;
 }
 
@@ -718,6 +918,12 @@ body {
 
 .timerControl button:hover i {
     color: var(--summit-blue);
+}
+
+@media (max-width: 998px) {
+    .goalsItemElement {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 888px) {
