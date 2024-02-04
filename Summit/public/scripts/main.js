@@ -3,125 +3,83 @@
  * Provides the JavaScript interactions for all pages.
  *
  * @author 
- * PUT_YOUR_NAME_HERE
+ * Fred Hamer
  */
 
 /** namespace. */
+
 var rhit = rhit || {};
 
-/** globals */
-rhit.variableName = "";
 
-/** function and class syntax examples */
-rhit.functionName = function () {
-	/** function body */
-};
 
-rhit.ClassName = class {
+
+rhit.LoginPageController = class {
 	constructor() {
 
+		this._user = null;
+		this._unsubscribe = null;
+
+		this._unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				const uid = user.uid;
+				console.log("Logged in", uid);
+				window.location.href = '/home.html';
+			}
+			if (this._unsubscribe) {
+				this._unsubscribe();
+			}
+		})
+
+		const inputEmail = document.querySelector("#inputEmail");
+		const inputPassword = document.querySelector("#inputPassword");
+
+		document.querySelector("#loginButton").onclick = (event) => {
+			console.log(`Login with ${inputEmail.value}, ${inputPassword.value}`);
+			firebase.auth().signInWithEmailAndPassword(inputEmail.value, inputPassword.value).then((user) => {
+				this._user = user;
+				console.log(this._user);
+				console.log(this.isSignedIn());
+			});
+		}
+
+		document.querySelector("#createAccountButton").onclick = (event) => {
+			console.log(`Create account for ${inputEmail.value}, ${inputPassword.value}`);
+			firebase.auth().createUserWithEmailAndPassword(inputEmail.value, inputPassword.value)
+		}
 	}
 
-	methodName() {
+	isSignedIn() {
+		return !!this._user;
+	}
 
+	stopListening(changeListener) {
+		this._unsubscribe();
+	}
+}
+
+rhit.HomePageController = class {
+    constructor() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                console.log("User not signed in, redirecting to login page");
+                window.location.href = '/login.html'; // Adjust the path as necessary
+            }
+        });
+
+        // Other home page initialization code...
+    }
+}
+
+
+rhit.checkForRedirects = function () {
+	if (document.querySelector("#loginPage") && rhit.LoginPageController.isSignedIn()) {
+		window.location.href = '/home.html';
 	}
 }
 
 /* Main */
 /** function and class syntax examples */
 rhit.main = function () {
-	console.log("Ready");
-
-	firebase.auth().onAuthStateChanged((user) => {
-		if (user) {
-			const uid = user.uid;
-			const phoneNumber = user.phoneNumber;
-			const displayName = user.displayName;
-			const email = user.email;
-			const photoURL = user.photoURL;
-			const isAnonymous = user.isAnonymous;
-
-			console.log("The user is signed in.", uid);
-			console.log('displayName :>> ', displayName);
-			console.log('email :>> ', email);
-			console.log('photoURL :>> ', photoURL);
-			console.log('phoneNumber :>> ', phoneNumber);
-			console.log('isAnonymous :>> ', isAnonymous);
-			console.log('uid :>> ', uid);
-			// ...
-
-
-
-		} else {
-			console.log("There is no user signed in.");
-		}
-	});
-
-	const inputEmail = document.querySelector("#inputEmail");
-	const inputPassword = document.querySelector("#inputPassword");
-
-	document.querySelector("#signOut").onclick = (event) => {
-		console.log(`Sign out`);
-
-		firebase.auth().signOut().then(function () {
-			// Sign-out successful.
-			console.log("You are now signed out.");
-		}).catch((error) => {
-			// An error happened.
-			console.log("Sign out error.");
-		});
-	};
-	document.querySelector("#createAccount").onclick = (event) => {
-		console.log(`Create account for email: ${inputEmail.value} password: ${inputPassword.value}`);
-
-		firebase.auth().createUserWithEmailAndPassword(inputEmail.value, inputPassword.value).catch(function (error) {
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			// ..
-			console.log("Account creation error.");
-		});
-	};
-	document.querySelector("#login").onclick = (event) => {
-		console.log(`Log in for email: ${inputEmail.value} password: ${inputPassword.value}`);
-
-		firebase.auth().signInWithEmailAndPassword(inputEmail.value, inputPassword.value).catch(function (error) {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			console.log("Login error.");
-		});
-	};
-
-	document.querySelector("#anonymousAuth").onclick = (event) => {
-		console.log("Using guest account");
-
-		firebase.auth().signInAnonymously().catch(function (error) {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			console.log("Guest user error.");
-		});
-	};
-
-	rhit.startFirebaseUI();
-
-};
-
-rhit.startFirebaseUI = function () {
-	// FirebaseUI config.
-	var uiConfig = {
-		signInSuccessUrl: '/',
-		signInOptions: [
-			// Leave the lines as is for the providers you want to offer your users.
-			firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-			firebase.auth.EmailAuthProvider.PROVIDER_ID,
-			firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-			firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-		],
-	};
-
-	// Initialize the FirebaseUI Widget using Firebase.
-	const ui = new firebaseui.auth.AuthUI(firebase.auth());
-	// The start method will wait until the DOM is loaded.
-	ui.start('#firebaseui-auth-container', uiConfig);
-};
+}
 
 rhit.main();

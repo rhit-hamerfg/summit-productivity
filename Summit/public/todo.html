@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
   <title>Summit</title>
 </head>
@@ -25,32 +26,96 @@
     <button class="navBarTopButton"><i class="material-icons navBarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
     <button class="navBarTopButton"><i class="material-icons navBarIcons">visibility</i>&nbsp;&nbsp;Focus</button>
     <!-- </span> -->
-    <div class="dropdown pull-xs-right">
-      <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="lr1" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="true">
-        <i class="material-icons">menu</i>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right">
-        <button id="allPhotos" type="button" class="dropdown-item menuButton" data-toggle="modal"
-          data-target="#editImage"><i class="material-icons">account_circle</i>&nbsp;&nbsp;Account</button>
-        <button style="border-radius: 0px;" id="signOut" type="button" class="dropdown-item menuButton"><i
-            class="material-icons">logout</i>&nbsp;&nbsp;Sign Out</button>
-      </div>
-    </div>
   </nav>
 
-  <div id="mainPage" class="container page-container">
 
-    <div class="flex-container">
-      <div id="todoBlock"></div>
-      <div id="habitsBlock"></div>
+
+  <div id="todoPage">
+    <div class="elementBlockContainerHome">
+      <div id="todoHeader"><span id="todoHeaderText">To-Do List</span><button id="addTodo" data-toggle="modal" data-target="#addTodo"><i class="material-icons">add</i>&nbsp;&nbsp;&nbsp;Add</button></div>
+      <div class="halfElementBlockContainerHome">
+        <div class="toDoItemElement">
+          <div class="toDoItemText">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+            eligendi tenetur sit minima nisi doloribus saepe? Qui natus tempora id fuga sapiente quam consectetur ipsa
+            blanditiis, in repellat.
+          </div>
+          <div class="priorityCheckBox">
+            <div class="priorityHigh"></div>
+            <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+          </div>
+        </div>
+        <div class="toDoItemElement">
+          <div class="toDoItemText">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+            eligendi tenetur sit minima nisi doloribus saepe? Qui natus tempora id fuga sapiente quam consectetur ipsa
+            blanditiis, in repellat.
+          </div>
+          <div class="priorityCheckBox">
+            <div class="priorityHigh"></div>
+            <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+          </div>
+        </div>
+        <div class="toDoItemElement">
+          <div class="toDoItemText">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+            eligendi tenetur sit minima nisi doloribus saepe? Qui natus tempora id fuga sapiente quam consectetur ipsa
+            blanditiis, in repellat.
+          </div>
+          <div class="priorityCheckBox">
+            <div class="priorityMed"></div>
+            <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+          </div>
+        </div>
+        <div class="toDoItemElement">
+          <div class="toDoItemText">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+            eligendi tenetur sit minima nisi doloribus saepe? Qui natus tempora id fuga sapiente quam consectetur ipsa
+            blanditiis, in repellat.
+          </div>
+          <div class="priorityCheckBox">
+            <div class="priorityMed"></div>
+            <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+          </div>
+        </div>
+        <div class="toDoItemElement">
+          <div class="toDoItemText">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+            eligendi tenetur sit minima nisi doloribus saepe? Qui natus tempora id fuga sapiente quam consectetur ipsa
+            blanditiis, in repellat.
+          </div>
+          <div class="priorityCheckBox">
+            <div class="priorityLow"></div>
+            <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+          </div>
+        </div>
+        <div class="toDoItemElement">
+          <div class="toDoItemText">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+            eligendi tenetur sit minima nisi doloribus saepe? Qui natus tempora id fuga sapiente quam consectetur ipsa
+            blanditiis, in repellat.
+          </div>
+          <div class="priorityCheckBox">
+            <div class="priorityLow"></div>
+            <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+          </div>
+        </div>
+      </div>
     </div>
-
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTodo">Large modal</button>
+    <div id="addTodo" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          ...
+        </div>
+      </div>
+    </div>
   </div>
 
   <footer id="bottomNavbar" class="fixed-bottom">
     <button class="navBarBottomButton"><i class="material-icons navBarIcons">home</i></button>
-    <button style="background-color: #EEEEEE;" class="navBarBottomButton"><i style="color: #4682B4;" class="material-icons navBarIcons">list</i></button>
+    <button style="background-color: #EEEEEE;" class="navBarBottomButton"><i style="color: #4682B4;"
+        class="material-icons navBarIcons">list</i></button>
     <button class="navBarBottomButton"><i class="material-icons navBarIcons">apps</i></button>
     <button class="navBarBottomButton"><i class="material-icons navBarIcons">task_alt</i></button>
     <button class="navBarBottomButton"><i class="material-icons navBarIcons">visibility</i></button>
@@ -65,6 +130,10 @@
   <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
   <script src="/__/firebase/init.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 

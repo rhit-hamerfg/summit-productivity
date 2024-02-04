@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
   <title>Summit</title>
 </head>
@@ -39,13 +40,23 @@
     </div>
   </nav>
 
-  <div id="mainPage" class="container page-container">
+  <div id="focusPage" class="container">
 
-    <div class="flex-container">
-      <div id="todoBlock"></div>
-      <div id="habitsBlock"></div>
+    <div class="pomodoroTimer">
+      <div class="outerRing">
+        <div class="timer">
+          <div id="time">
+            <span id="minutes">25</span>
+            <span id="colon">:</span>
+            <span id="seconds">00</span>
+          </div>
+      </div>
     </div>
-
+    <div class="timerControl">
+      <button id="resetTimer"><i class="material-icons navBarIcons">restart_alt</i>&nbsp;&nbsp;Reset</button>
+      <button id="minutes25"><i class="material-icons navBarIcons">timer</i>&nbsp;&nbsp;25:00</button>
+      <button id="minutes5"><i class="material-icons navBarIcons">timer</i>&nbsp;&nbsp;5:00</button>
+    </div>
   </div>
 
   <footer id="bottomNavbar" class="fixed-bottom">
