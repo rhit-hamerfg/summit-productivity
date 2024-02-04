@@ -3,7 +3,7 @@
     --summit-blue: #201c61;
     --summit-white: #EEEEEE;
     --background-color: #232323;
-    --neon-purple: rgb(67, 31, 141);
+    --neon-purple: rgb(102, 44, 216);
 }
 
 body {
@@ -228,7 +228,15 @@ body {
     flex-grow: 1;
     margin: 50px;
     height: 90vh;
-    
+}
+
+.elementBlockContainerTodo {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    margin: 50px;
+    height: 90vh;
 }
 
 .elementBlockContainterHabits {
@@ -256,7 +264,27 @@ body {
     scroll-behavior: smooth;
 }
 
+.halfElementBlockContainerTodo {
+    /* background-color: var(--summit-blue); */
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-radius: 50px;
+    flex-grow: 1;
+    height: auto;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
 .halfElementBlockContainerHome::-webkit-scrollbar {
+    display: none;
+    scroll-behavior: smooth;
+  }
+
+  .halfElementBlockContainerTodo::-webkit-scrollbar {
     display: none;
     scroll-behavior: smooth;
   }
@@ -392,6 +420,19 @@ body {
 }
 
 #todoHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#todoHeaderHome {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
