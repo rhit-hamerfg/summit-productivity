@@ -106,11 +106,11 @@ body {
 
 #accountButtons button {
     font-family: 'Comfortaa', sans-serif;
-    color: var(--summit-white);
+    color: var(--summit-blue);
     font-size: 1rem;
     font-weight: 600;
     border: 3px solid;
-    border-color: var(--summit-white);
+    border-color: var(--summit-blue);
     border-radius: 40px;
     transition: all 0.4s;
 }
