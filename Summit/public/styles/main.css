@@ -204,6 +204,7 @@ body {
 
 #homePage {
     display: flex;
+    flex-direction: row;
     font-family: 'Comfortaa', sans-serif;
     text-align: center;
     flex-wrap: nowrap;
@@ -270,6 +271,15 @@ body {
     flex-wrap: nowrap;
     flex-grow: 1;
     margin: 50px;
+    height: 90vh;
+}
+
+.elementBlockContainerHomeRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    gap: 50px;
     height: 90vh;
 }
 
@@ -362,6 +372,15 @@ body {
     scroll-behavior: smooth;
 }
 
+#homePage .halfElementBlockContainerGoals {
+    margin-bottom: 50px;
+}
+
+#homePage .halfElementBlockContainerTodo {
+    margin-bottom: 50px;
+    display: block;
+}
+
 .halfElementBlockContainerGoals::-webkit-scrollbar {
     display: none;
     scroll-behavior: smooth;
@@ -384,7 +403,7 @@ body {
 
 .quarterElementBlockContainerHome {
     /* background-color: var(--summit-blue); */
-    background-color: var(--neon-purple);
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -452,9 +471,10 @@ body {
 
 #welcomeText {
     font-family: 'Comfortaa', sans-serif;
-    font-size: 3rem;
+    font-size: 4rem;
     padding: 30px;
     font-weight: 900;
+    display: flex;
 }
 
 #myAccountButton {
@@ -466,7 +486,7 @@ body {
     border-radius: 30px;
     border-color: var(--summit-white);
     color: var(--summit-white);
-    background-color: var(--summit-blue);
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,7 +505,7 @@ body {
     border-radius: 30px;
     border-color: var(--summit-white);
     color: var(--summit-white);
-    background-color: var(--summit-blue);
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
