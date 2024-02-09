@@ -293,6 +293,7 @@ body {
     display: grid;
     justify-items: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 .outerRing {
     background-color: var(--summit-blue-transparent-dark);
@@ -331,12 +332,19 @@ body {
     height: 85%;
     margin: 138px 30px 30px 30px;
 }
+.habitsPage::-webkit-scrollbar {
+    display: none;
+}
+.habitsPage {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 #habitsHeader {
     text-align: center;
     background-color: transparent;
     width: auto;
     height: auto;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 800;
     margin: 15px;
     grid-column: 1 / span 2;
@@ -358,7 +366,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     transition: all 0.4s;
 }
@@ -422,6 +430,13 @@ body {
     gap: 20px;
     justify-content: center;
 }
+.todoPage::-webkit-scrollbar {
+    display: none;
+}
+.todoPage {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 #todoHeader {
     display: flex;
     flex-wrap: nowrap;
@@ -432,6 +447,8 @@ body {
     flex-grow: 1;
     flex-shrink: 1;
     text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
     margin-bottom: 30px;
 }
 #todoHeader button {
@@ -447,6 +464,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.2rem;
     font-weight: 700;
     transition: all 0.4s;
 }
