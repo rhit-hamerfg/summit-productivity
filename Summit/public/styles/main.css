@@ -690,6 +690,7 @@ body {
     }
     #summitLogo {
         visibility: visible;
+        src: url("images/logosummitlogoSmall.png");
     }
     .homePage {
         grid-template-columns: 90vw;
