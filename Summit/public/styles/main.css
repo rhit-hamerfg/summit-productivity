@@ -215,6 +215,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 1;
 }
 #myAccountButton {
     grid-column: 1;
@@ -235,7 +236,7 @@ body {
     grid-template-columns: auto;
     grid-template-rows: auto;
     justify-self: center;
-    margin-bottom: 50px;
+    margin: 50px;
 }
 #quote {
     justify-self: center;
@@ -253,7 +254,7 @@ body {
     grid-column: 2;
     grid-row: 1 / span 2;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto;
     grid-template-rows: auto auto 200px;
     gap: 30px;
     padding: 20px;
@@ -267,6 +268,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 10px;
 }
 #goalsGlance {
     background-color: var(--summit-blue-transparent-dark);
@@ -276,6 +279,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 10px;
 }
 #habitsGlance {
     background-color: var(--summit-blue-transparent-dark);
@@ -285,6 +290,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 10px;
 }
 .pomodoroTimer {
     grid-row: 1 / span 2;
@@ -623,206 +630,101 @@ body {
 }
 /*Media Queries*/
 /*-------------------------------------------------------------*/
-@media (max-width: 1064px) {
-    #habitsPage {
-        margin-top: 150px;
-    }
-}
-@media (max-width: 998px) {
-    .goalsItemElement {
-        flex-direction: column;
-    }
-}
-@media (max-width: 888px) {
-    #topNavbar {
-        justify-content: center;
-        border: none;
-    }
-
-    #topNavbar button {
-        display: none;
-    }
-
-    .welcomeBlock {
-        margin: 0;
-    }
-
-    #goalsPage .priorityCheckBox {
-        flex-direction: row;
-    }
-
-    #welcomeText {
-        font-size: 3rem;
-        padding-bottom: 0;
-        height: max-content;
-    }
-
-    .quarterElementBlockContainerHome {
-        margin: 10px;
-    }
-
-    .elementBlockContainerHome {
-        margin-left: 0;
-        margin-right: 20px;
-    }
-
-    .priorityCheckBox {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .priorityDateBox {
-        flex-direction: row;
-    }
-
-    .datebox {
-        font-size: 1rem;
-    }
-
-    #loginHeader {
-        font-size: 2rem;
+@media (max-width: 950px) {
+    #quote {
         font-weight: 500;
-        margin: 50px;
-    }
-
-    #motto {
-        font-size: 1rem;
-        font-weight: 250;
-    }
-
-    #accountButtons {
-        flex-direction: column;
-        flex-wrap: wrap;
-    }
-
-    .loginPage {
-        margin: 75px;
-    }
-
-    #homePage {
-        flex-direction: column;
-    }
-
-    .checkBox {
-        margin-right: 15px;
-    }
-
-    body {
-        overflow: scroll;
-    }
-}
-@media (min-width: 889px) {
-    .navBarBottomButton {
-        display: none;
-    }
-
-    #bottomNavbar {
-        display: none;
-    }
-}
-@media (max-width: 766px) {
-
-    #habitsHeader {
-        margin-top: 250px;
-    }
-    /* #habitsList {
-        margin-top: 50px;
-    } */
-}
-@media (max-width: 400) {
-    #bottomNavbar {
-        gap: 5px;
-    }
-
-    .navBarBottomButton {
-        border-radius: 50px;
-        gap: 5px;
-    }
-}
-@media (max-width: 700px) {
-
-}
-@media (max-width: 566px) {
-    #loginHeader {
-        display: none;
-    }
-
-    .loginHeaderSmall {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Comfortaa', sans-serif;
-        color: var(--summit-white);
-        margin: 30px;
-        text-align: center;
-    }
-
-    .loginPage {
-        margin: 30px;
-        max-height: auto;
-    }
-
-    .toDoItemElement {
-        flex-direction: column;
-    }
-
-    .priorityCheckBox {
-        flex-direction: row;
-        justify-content: space-around;
-        margin-left: 15px;
-    }
-
-    #addTodo {
-        width: max-content;
-        margin: 0 15px;
-    }
-
-    #goalsHeaderText {
         font-size: 2rem;
     }
-
-    #addGoal {
-        margin: 0;
-        margin-right: 10px;
+    .overviewGrid {
+       grid-template-rows: auto;
     }
-
-    .elementBlockContainerHome {
-       margin-left: 12px;
-       margin-right: 12px;
+    #todoGlance {
+        grid-row: 3;
+        grid-column: 1 / span 3;
     }
-
-    .halfElementBlockContainerHome {
-        margin-top: 10px;
-        margin-bottom: 44px;
+    #goalsGlance {
+        grid-row: 4;
+        grid-column: 1 / span 3;
     }
-
-    .checkmark{
-        font-weight: 400;
-        font-size: 25px;
+    #habitsGlance {
+        grid-row: 5;
+        grid-column: 1 / span 3;
+    }
+    .outerRing {
+        width: 300px;
+        height: 300px;
+    }
+    .innerCircle {
+        width: 281px;
+        height: 281px;
+    }
+    #timer {
+        font: 600 3.75rem;
     }
 }
-@media (max-width: 500px) {
-    .homePageMobileNav button {
-        width: max-content;
+@media (max-width: 750px) {
+    #topNavbar {
+        height: 60px;
+        padding-bottom: 0;
+    }
+    .navbarButton {
+        font-size: 0;
+        visibility: hidden;
+    }
+    .navbarButton i{
+        visibility: visible;
+    }
+    #summitLogoText {
+        font-size: 0;
+        visibility: hidden;
+    }
+    #summitLogo {
+        visibility: visible;
+    }
+    .homePage {
+        grid-template-columns: 90vw;
+        grid-template-rows: auto 100px auto;
+        overflow: scroll;
+        margin: 60px 0 0 0;
+        gap: 0;
+        height: 100%;
+    }
+    .welcomeGrid {
+        grid-row: 1;
+        grid-column: 1 / span 2;
+        gap: 12px;
         padding: 10px;
     }
-
-    #habitsPage .priorityCheckBox {
-        flex-direction: column;
-        justify-content: center;
+    .quoteGrid {
+        grid-row: 2;
+        grid-column: 1 / span 2;
+        margin: 0;
+        padding: 10px;
+        height: 80px;
     }
-
-    #habitsHeader {
+    #quote {
+        padding: 10px;
         font-size: 1rem;
     }
-
-    .halfElementBlockContainerHabits {
-        margin: 0;
-        overflow: scroll;
+    .overviewGrid {
+        grid-row: 3;
+        grid-column: 1 / span 2;
+        padding: 10px;
+        gap: 10px;
+        margin-bottom: auto;
     }
-
-    #habitsPage {
-        overflow: scroll;
+    .pomodoroTimer {
+        margin: 0;
+    }
+    #outerRing {
+        height: 200px;
+        width: 200px;
+    }
+    #innerCircle {
+        height: 187px;
+        width: 187px;
+    }
+    #timer{
+        font-size: 2.5rem;
     }
 }
