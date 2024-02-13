@@ -314,7 +314,7 @@ body {
     margin-bottom: 50px;
 }
 .outerRing {
-    background-color: #fd5c63;
+    background-color: var(--bayern-blue);
     border-radius: 50%;
     height: 400px;
     width: 400px;
