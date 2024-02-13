@@ -62,13 +62,10 @@ rhit.fbAuthManager = class {
 }
 
 rhit.checkForRedirects = function () {
-	if (document.querySelector(".loginPage") && !rhit.fbAuthManager.isSignedIn) {
-		window.location.href = "/";
-	}
 	if (document.querySelector(".loginPage") && rhit.fbAuthManager.isSignedIn) {
 		window.location.href = "/home.html";
 	}
-	if (!document.querySelector(".homePage") && !rhit.fbAuthManager.isSignedIn) {
+	if (document.querySelector(".homePage") && !rhit.fbAuthManager.isSignedIn) {
 		window.location.href = "/index.html";
 	}
 };
