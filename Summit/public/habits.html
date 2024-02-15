@@ -16,193 +16,54 @@
   <title>Summit</title>
 </head>
 
-<body style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;">
+<body
+  style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;">
   <nav id="topNavbar" class="navbar navbar-dark fixed-top">
-    <a id="summitLogoText" class="navbar-brand" href="#">Summit&nbsp;&nbsp;<img id="summitLogo"
+    <a id="summitLogoText" class="navbar-brand" href="/home.html">Summit&nbsp;&nbsp;<img id="summitLogo"
         src="images/summitLogo.png" alt="Summit Logo"></a>
-    <!-- <span id="topNavbarButtons"> -->
-    <button class="navbarButton"><i class="material-icons navBarIcons">home</i>&nbsp;&nbsp;Home</button>
-    <button class="navbarButton"><i class="material-icons navBarIcons">list</i>&nbsp;&nbsp;To-Do</button>
-    <button class="navbarButton"><i class="material-icons navBarIcons">apps</i>&nbsp;&nbsp;Habits</button>
-    <button class="navbarButton"><i class="material-icons navBarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
+    <button id="homeButton" class="navbarButton"><i class="material-icons navbarIcons">home</i>&nbsp;&nbsp;Home</button>
+    <button id="todoButton" class="navbarButton"><i
+        class="material-icons navbarIcons">list</i>&nbsp;&nbsp;To-Do</button>
+    <button id="habitsButton" class="navbarButton"><i
+        class="material-icons navbarIcons">apps</i>&nbsp;&nbsp;Habits</button>
+    <button id="goalsButton" class="navbarButton"><i
+        class="material-icons navbarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
   </nav>
 
   <div class="habitsPage">
-    <div id="habitsHeader">My Habits: <button>Add Habit</button></div>
+    <div id="habitsHeader">My Habits: <button data-toggle="modal" data-target="#addHabit">Add Habit</button></div>
     <div class="habitsList">
       <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
+        <div class="habitItemText"></div>
         <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div><div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
+          <div class="streakbox"></div>
           <div class="checkBox"><i class="material-icons checkmark">done</i></div>
         </div>
       </div>
     </div>
-    <div class="habitsList">
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
-      </div>
-      <div class="habitItemElement">
-        <div class="habitItemText">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-          eligendi
-        </div>
-        <div class="priorityCheckBox">
-          <div class="streakbox">1x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+    <div style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;" 
+        class="modal fade summitModal" id="addHabit" tabindex="-1" role="dialog" aria-labelledby="Add Habit"
+        aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Habit</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group bmd-form-group">
+              <label class="summitModalText" for="inputTodo">How do you want to build a better you?</label>
+              <input type="text" class="form-control summitModalInput" id="inputHabit">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="cancelButton" type="button" class="btn btn-secondary"
+              data-dismiss="modal">CANCEL</button>&nbsp;&nbsp;
+            <button id="submitAddHabit" type="button" class="btn btn-primary" data-dismiss="modal">Let's do
+              it!</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/popper.js"></script>

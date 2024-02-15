@@ -10,6 +10,25 @@
 
 var rhit = rhit || {};
 
+rhit.FB_KEY_TODO = "todo";
+rhit.FB_KEY_PRIORITY = "priority";
+rhit.FB_KEY_AUTHOR = "author";
+rhit.FB_KEY_HABIT = "habit";
+rhit.FB_KEY_STREAK = "0";
+rhit.FB_KEY_GOAL = "goal";
+rhit.FB_KEY_DATE = "date";
+rhit.fbSingleTodoManager = null;
+rhit.fbSingleHabitManager = null;
+rhit.fbAuthManager = null;
+
+//From CSSE280 MovieQuotes FA
+function htmlToElement(html) {
+	var template = document.createElement('template');
+	html = html.trim();
+	template.innerHTML = html;
+	return template.content.firstChild;
+}
+
 rhit.LoginPageController = class {
 	constructor() {
 		const inputEmail = document.querySelector("#inputEmail");
@@ -28,13 +47,547 @@ rhit.LoginPageController = class {
 
 		document.querySelector("#loginButton").onclick = (event) => {
 			console.log(`Log in for email: ${inputEmail.value} password: ${inputPassword.value}`);
-	
+
 			firebase.auth().signInWithEmailAndPassword(inputEmail.value, inputPassword.value).catch(function (error) {
 				const errorCode = error.code;
 				const errorMessage = error.message;
 				console.log("Login error.");
 			});
 		};
+	}
+}
+
+rhit.HomePageController = class {
+	constructor() {
+		document.querySelector("#signOutButton").onclick = (event) => {
+			firebase.auth().signOut().then(function () {
+				window.location.href = '/';
+			}).catch(function (error) {
+				console.log("Sign out error");
+			})
+		}
+
+		document.querySelector("#todoButton").onclick = (event) => {
+			window.location.href = '/todo.html'
+		}
+
+		document.querySelector("#habitsButton").onclick = (event) => {
+			window.location.href = '/habits.html'
+		}
+
+		document.querySelector("#goalsButton").onclick = (event) => {
+			window.location.href = '/goals.html'
+		}
+	}
+}
+
+rhit.TodoPageController = class {
+	constructor() {
+		document.querySelector("#homeButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/home.html'
+		}
+
+		document.querySelector("#habitsButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/habits.html'
+		}
+
+		document.querySelector("#goalsButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/goals.html'
+		}
+
+		document.querySelector("#submitAddTodo").onclick = (event) => {
+			const todo = document.querySelector("#inputTodo").value;
+			let priority = "";
+
+			if (document.getElementById("highPriority").checked) {
+				priority = "high";
+			} else if (document.getElementById("medPriority").checked) {
+				priority = "med";
+			} else {
+				priority = "low";
+			}
+
+			console.log(priority);
+			console.log(todo);
+			rhit.fbTodoManager.add(todo, priority);
+		}
+
+		$("#addTodo").on("show.bs.modal", (event) => {
+			document.querySelector("#inputTodo").value = "";
+		});
+		$("#addTodo").on("shown.bs.modal", (event) => {
+			document.querySelector("#inputTodo").focus();
+		});
+
+		rhit.fbTodoManager.beginListening(this.updateList.bind(this));
+	}
+
+	updateList() {
+		const newList = htmlToElement('<div id="todoContainer"></div>');
+
+		for (let i = 0; i < rhit.fbTodoManager.length; i++) {
+			const todo = rhit.fbTodoManager.getTodoAtIndex(i);
+			const newTodo = this._createTodo(todo);
+			// newTodo.onclick = (event) => {
+			// 	window.location.href = `/image.html?id=${img.id}`;
+			// }
+			newList.appendChild(newTodo);
+		}
+
+		const oldList = document.querySelector("#todoContainer");
+		oldList.removeAttribute("id");
+		oldList.hidden = true;
+		oldList.parentElement.appendChild(newList);
+	}
+
+	_createTodo(Todo) {
+		return htmlToElement(`<div class="toDoItemElement">
+		<div class="toDoItemText">${Todo.todo}</div>
+		<div class="priorityCheckBox">
+        <div class="${Todo.priority}"></div>
+        <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+      </div>
+	</div>`);
+	}
+}
+
+rhit.Todo = class {
+	constructor(id, todo, priority) {
+		this.id = id;
+		this.todo = todo;
+		this.priority = priority;
+	}
+}
+
+rhit.fbTodoManager = class {
+	constructor(uid) {
+		this._uid = uid;
+		this._documentSnapshots = [];
+		this._ref = firebase.firestore().collection("todos");
+		this._unsubscribe = null;
+	}
+	add(todo, priority) {
+		this._ref.add({
+			[rhit.FB_KEY_TODO]: todo,
+			[rhit.FB_KEY_PRIORITY]: priority,
+			[rhit.FB_KEY_AUTHOR]: rhit.fbAuthManager.uid,
+		})
+	}
+	beginListening(changeListener) {
+		let query = this._ref;
+		if (this._uid) {
+			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		}
+		this._unsubscribe = query.onSnapshot((querySnapshot) => {
+			this._documentSnapshots = querySnapshot.docs;
+			changeListener();
+		});
+	}
+	stopListening() {
+		this._unsubscribe();
+	}
+	get length() {
+		return this._documentSnapshots.length;
+	}
+	getTodoAtIndex(index) {
+		const docSnapshot = this._documentSnapshots[index];
+		const todo = new rhit.Todo(
+			docSnapshot.id,
+			docSnapshot.get(rhit.FB_KEY_TODO),
+			docSnapshot.get(rhit.FB_KEY_PRIORITY),
+		);
+		return todo;
+	}
+}
+
+rhit.FbSingleTodoManager = class {
+	constructor(todoID) {
+		this._documentSnapshot = {};
+		this._unsubscribe = null;
+		this._ref = firebase.firestore().collection("todos").doc(todoID);
+	}
+	beginListening(changeListener) {
+
+		this._unsubscribe = this._ref.onSnapshot((doc) => {
+			if (doc.exists) {
+				this._documentSnapshot = doc;
+				changeListener();
+			} else {
+				console.log("No such document");
+			}
+		})
+
+	}
+
+	stopListening() {
+		this._unsubscribe();
+	}
+
+	update(todo, priority) {
+		this._ref.update({
+			[rhit.FB_KEY_TODO]: todo,
+			[rhit.FB_KEY_PRIORITY]: priority,
+		})
+			.then(() => {
+				console.log("Updated");
+			})
+			.catch(function (error) {
+				console.error("Error: ", error);
+			})
+	}
+	delete() {
+		return this._ref.delete();
+	}
+
+	get todo() {
+		return this._documentSnapshot.get(rhit.FB_KEY_TODO);
+	}
+
+	get priority() {
+		return this._documentSnapshot.get(rhit.FB_KEY_PRIORITY);
+	}
+
+	get author() {
+		return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR);
+	}
+}
+
+rhit.HabitsPageController = class {
+	constructor() {
+		document.querySelector("#homeButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/home.html'
+		}
+
+		document.querySelector("#todoButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/todo.html'
+		}
+
+		document.querySelector("#goalsButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/goals.html'
+		}
+
+		document.querySelector("#submitAddHabit").onclick = (event) => {
+			const habit = document.querySelector("#inputHabit").value;
+			const streak = 0;
+
+			console.log(habit);
+			console.log(streak);
+			rhit.fbHabitsManager.add(habit, streak);
+		}
+
+		$("#addHabit").on("show.bs.modal", (event) => {
+			document.querySelector("#inputHabit").value = "";
+		});
+		$("#addHabit").on("shown.bs.modal", (event) => {
+			document.querySelector("#inputHabit").focus();
+		});
+
+		rhit.fbHabitsManager.beginListening(this.updateList.bind(this));
+	}
+
+	updateList() {
+		const newList = htmlToElement('<div class="habitsList"></div>');
+
+		for (let i = 0; i < rhit.fbHabitsManager.length; i++) {
+			const habit = rhit.fbHabitsManager.getHabitAtIndex(i);
+			const newHabit = this._createHabit(habit);
+			// newTodo.onclick = (event) => {
+			// 	window.location.href = `/image.html?id=${img.id}`;
+			// }
+			newList.appendChild(newHabit);
+		}
+
+		const oldList = document.querySelector(".habitsList");
+		oldList.removeAttribute("class");
+		oldList.hidden = true;
+		oldList.parentElement.appendChild(newList);
+	}
+
+	_createHabit(Habit) {
+		return htmlToElement(`<div class="habitItemElement">
+        <div class="habitItemText">${Habit.habit}</div>
+        <div class="priorityCheckBox">
+          <div class="streakbox">${Habit.streak}x</div>
+          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+        </div>
+      </div>`);
+	}
+}
+
+rhit.Habit = class {
+	constructor(id, habit, streak) {
+		this.id = id;
+		this.habit = habit;
+		this.streak = streak;
+	}
+}
+
+rhit.fbHabitsManager = class {
+	constructor(uid) {
+		this._uid = uid;
+		this._documentSnapshots = [];
+		this._ref = firebase.firestore().collection("habits");
+		this._unsubscribe = null;
+	}
+
+	add(habit, streak) {
+		this._ref.add({
+			[rhit.FB_KEY_HABIT]: habit,
+			[rhit.FB_KEY_STREAK]: streak,
+			[rhit.FB_KEY_AUTHOR]: rhit.fbAuthManager.uid,
+		})
+	}
+
+	beginListening(changeListener) {
+		let query = this._ref;
+		if (this._uid) {
+			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		}
+		this._unsubscribe = query.onSnapshot((querySnapshot) => {
+			this._documentSnapshots = querySnapshot.docs;
+			changeListener();
+		});
+	}
+
+	stopListening() {
+		this._unsubscribe();
+	}
+
+	get length() {
+		return this._documentSnapshots.length;
+	}
+
+	getHabitAtIndex(index) {
+		const docSnapshot = this._documentSnapshots[index];
+		const habit = new rhit.Habit(
+			docSnapshot.id,
+			docSnapshot.get(rhit.FB_KEY_HABIT),
+			docSnapshot.get(rhit.FB_KEY_STREAK),
+		);
+		return habit;
+	}
+}
+
+rhit.FbSingleHabitManager = class {
+	constructor(habitID) {
+		this._documentSnapshot = {};
+		this._unsubscribe = null;
+		this._ref = firebase.firestore().collection("habits").doc(habitID);
+	}
+	beginListening(changeListener) {
+
+		this._unsubscribe = this._ref.onSnapshot((doc) => {
+			if (doc.exists) {
+				this._documentSnapshot = doc;
+				changeListener();
+			} else {
+				console.log("No such document");
+			}
+		})
+
+	}
+
+	stopListening() {
+		this._unsubscribe();
+	}
+
+	update(habit, streak) {
+		this._ref.update({
+			[rhit.FB_KEY_HABIT]: habit,
+			[rhit.FB_KEY_STREAK]: streak,
+		})
+			.then(() => {
+				console.log("Updated");
+			})
+			.catch(function (error) {
+				console.error("Error: ", error);
+			})
+	}
+	delete() {
+		return this._ref.delete();
+	}
+
+	get habit() {
+		return this._documentSnapshot.get(rhit.FB_KEY_HABIT);
+	}
+
+	get streak() {
+		return this._documentSnapshot.get(rhit.FB_KEY_STREAK);
+	}
+
+	get author() {
+		return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR);
+	}
+}
+
+rhit.GoalsPageController = class {
+	constructor() {
+		document.querySelector("#homeButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/home.html'
+		}
+
+		document.querySelector("#todoButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/todo.html'
+		}
+
+		document.querySelector("#habitsButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = '/habits.html'
+		}
+		document.querySelector("#submitAddGoal").onclick = (event) => {
+			const goal = document.querySelector("#inputGoal").value;
+			let date = document.querySelector("#inputDate").value;
+
+			console.log(goal);
+			console.log(date);
+			rhit.fbGoalsManager.add(goal, date);
+		}
+
+		$("#addGoal").on("show.bs.modal", (event) => {
+			document.querySelector("#inputGoal").value = "";
+		});
+		$("#addGoal").on("shown.bs.modal", (event) => {
+			document.querySelector("#inputGoal").focus();
+		});
+
+		rhit.fbGoalsManager.beginListening(this.updateList.bind(this));
+	}
+
+	updateList() {
+		const newList = htmlToElement('<div id="goalsContainer"></div>');
+
+		for (let i = 0; i < rhit.fbGoalsManager.length; i++) {
+			const goal = rhit.fbGoalsManager.getGoalAtIndex(i);
+			const newGoal = this._createGoal(goal);
+			// newTodo.onclick = (event) => {
+			// 	window.location.href = `/image.html?id=${img.id}`;
+			// }
+			newList.appendChild(newGoal);
+		}
+
+		const oldList = document.querySelector("#goalsContainer");
+		oldList.removeAttribute("id");
+		oldList.hidden = true;
+		oldList.parentElement.appendChild(newList);
+	}
+
+	_createGoal(Goal) {
+		return htmlToElement(`<div class="goalsItemElement">
+        <div class="goalsItemText">${Goal.goal}</div>
+        <div class="priorityCheckBox">
+          <div class="datebox">${Goal.date}</div>
+          <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
+        </div>
+      </div>`);
+	}
+}
+
+rhit.Goal = class {
+	constructor(id, goal, date) {
+		this.id = id;
+		this.goal = goal;
+		this.date = date;
+	}
+}
+
+rhit.fbGoalsManager = class {
+	constructor(uid) {
+		this._uid = uid;
+		this._documentSnapshots = [];
+		this._ref = firebase.firestore().collection("goals");
+		this._unsubscribe = null;
+	}
+	add(goal, date) {
+		this._ref.add({
+			[rhit.FB_KEY_GOAL]: goal,
+			[rhit.FB_KEY_DATE]: date,
+			[rhit.FB_KEY_AUTHOR]: rhit.fbAuthManager.uid,
+		})
+	}
+	beginListening(changeListener) {
+		let query = this._ref;
+		if (this._uid) {
+			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		}
+		this._unsubscribe = query.onSnapshot((querySnapshot) => {
+			this._documentSnapshots = querySnapshot.docs;
+			changeListener();
+		});
+	}
+	stopListening() {
+		this._unsubscribe();
+	}
+	get length() {
+		return this._documentSnapshots.length;
+	}
+	getGoalAtIndex(index) {
+		const docSnapshot = this._documentSnapshots[index];
+		const goal = new rhit.Goal(
+			docSnapshot.id,
+			docSnapshot.get(rhit.FB_KEY_GOAL),
+			docSnapshot.get(rhit.FB_KEY_DATE),
+		);
+		return goal;
+	}
+}
+
+rhit.FbSingleGoalManager = class {
+	constructor(goalID) {
+		this._documentSnapshot = {};
+		this._unsubscribe = null;
+		this._ref = firebase.firestore().collection("goals").doc(goalID);
+	}
+	beginListening(changeListener) {
+
+		this._unsubscribe = this._ref.onSnapshot((doc) => {
+			if (doc.exists) {
+				this._documentSnapshot = doc;
+				changeListener();
+			} else {
+				console.log("No such document");
+			}
+		})
+
+	}
+
+	stopListening() {
+		this._unsubscribe();
+	}
+
+	update(goal, date) {
+		this._ref.update({
+			[rhit.FB_KEY_GOAL]: goal,
+			[rhit.FB_KEY_DATE]: date,
+		})
+			.then(() => {
+				console.log("Updated");
+			})
+			.catch(function (error) {
+				console.error("Error: ", error);
+			})
+	}
+	delete() {
+		return this._ref.delete();
+	}
+
+	get goal() {
+		return this._documentSnapshot.get(rhit.FB_KEY_GOAL);
+	}
+
+	get date() {
+		return this._documentSnapshot.get(rhit.FB_KEY_DATE);
+	}
+
+	get author() {
+		return this._documentSnapshot.get(rhit.FB_KEY_AUTHOR);
 	}
 }
 
@@ -68,6 +621,15 @@ rhit.checkForRedirects = function () {
 	if (document.querySelector(".homePage") && !rhit.fbAuthManager.isSignedIn) {
 		window.location.href = "/index.html";
 	}
+	if (document.querySelector(".todoPage") && !rhit.fbAuthManager.isSignedIn) {
+		window.location.href = "/index.html";
+	}
+	if (document.querySelector(".habitsPage") && !rhit.fbAuthManager.isSignedIn) {
+		window.location.href = "/index.html";
+	}
+	if (document.querySelector(".goalsPage") && !rhit.fbAuthManager.isSignedIn) {
+		window.location.href = "/index.html";
+	}
 };
 
 rhit.initializePage = function () {
@@ -75,42 +637,27 @@ rhit.initializePage = function () {
 	if (document.querySelector(".loginPage")) {
 		new rhit.LoginPageController();
 	}
-// 	if (document.querySelector(".loginPage")) {
-// 		// const imageId = rhit.storage.getImageId();
-// 		const imageId = urlParams.get("id");
-// 		if (!imageId) {
-// 			window.location.href = '/';
-// 		}
-// 		rhit.fbSingleImageManager = new rhit.FbSingleImageManager(imageId);
-// 		new rhit.DetailPageController();
-// 	}
-// 	if (document.querySelector("#detailPage")) {
-// 		// const imageId = rhit.storage.getImageId();
-// 		const imageId = urlParams.get("id");
-// 		if (!imageId) {
-// 			window.location.href = '/';
-// 		}
-// 		rhit.fbSingleImageManager = new rhit.FbSingleImageManager(imageId);
-// 		new rhit.DetailPageController();
-// 	}
-// 	if (document.querySelector("#detailPage")) {
-// 		// const imageId = rhit.storage.getImageId();
-// 		const imageId = urlParams.get("id");
-// 		if (!imageId) {
-// 			window.location.href = '/';
-// 		}
-// 		rhit.fbSingleImageManager = new rhit.FbSingleImageManager(imageId);
-// 		new rhit.DetailPageController();
-// 	}
-// 	if (document.querySelector("#detailPage")) {
-// 		// const imageId = rhit.storage.getImageId();
-// 		const imageId = urlParams.get("id");
-// 		if (!imageId) {
-// 			window.location.href = '/';
-// 		}
-// 		rhit.fbSingleImageManager = new rhit.FbSingleImageManager(imageId);
-// 		new rhit.DetailPageController();
-// 	}
+	if (document.querySelector(".homePage")) {
+		new rhit.HomePageController();
+	}
+	if (document.querySelector(".todoPage")) {
+		const uid = urlParams.get("id");
+		rhit.fbTodoManager = new rhit.fbTodoManager(uid);
+		console.log("TODO Manager Initialized");
+		new rhit.TodoPageController();
+	}
+	if (document.querySelector(".habitsPage")) {
+		const uid = urlParams.get("id");
+		rhit.fbHabitsManager = new rhit.fbHabitsManager(uid);
+		console.log("HABITS Manager Initialized");
+		new rhit.HabitsPageController();
+	}
+	if (document.querySelector(".goalsPage")) {
+		const uid = urlParams.get("id");
+		rhit.fbGoalsManager = new rhit.fbGoalsManager(uid);
+		console.log("GOALS Manager Initalized");
+		new rhit.GoalsPageController();
+	}
 }
 
 /* Main */

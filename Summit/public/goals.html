@@ -18,116 +18,51 @@
 
 <body style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;">
   <nav id="topNavbar" class="navbar navbar-dark fixed-top">
-    <a id="summitLogoText" class="navbar-brand" href="#">Summit&nbsp;&nbsp;<img id="summitLogo"
+    <a id="summitLogoText" class="navbar-brand" href="/home.html">Summit&nbsp;&nbsp;<img id="summitLogo"
         src="images/summitLogo.png" alt="Summit Logo"></a>
-    <!-- <span id="topNavbarButtons"> -->
-    <button class="navbarButton"><i class="material-icons navBarIcons">home</i>&nbsp;&nbsp;Home</button>
-    <button class="navbarButton"><i class="material-icons navBarIcons">list</i>&nbsp;&nbsp;To-Do</button>
-    <button class="navbarButton"><i class="material-icons navBarIcons">apps</i>&nbsp;&nbsp;Habits</button>
-    <button class="navbarButton"><i class="material-icons navBarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
+    <button id="homeButton" class="navbarButton"><i class="material-icons navbarIcons">home</i>&nbsp;&nbsp;Home</button>
+    <button id="todoButton" class="navbarButton"><i class="material-icons navbarIcons">list</i>&nbsp;&nbsp;To-Do</button>
+    <button id="habitsButton" class="navbarButton"><i class="material-icons navbarIcons">apps</i>&nbsp;&nbsp;Habits</button>
+    <button id="goalsButton" class="navbarButton"><i class="material-icons navbarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
   </nav>
 
   <div class="goalsPage" class="container page-container">
-   <div id="goalsHeader">My Goals: <button>Add Goal</button></div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
+    <div id="goalsHeader">My Goals: <button data-toggle="modal" data-target="#addGoal">Add Goal</button></div>
+    <div id="goalsContainer">
+      <div class="goalsItemElement">
+        <div class="goalsItemText"></div>
+        <div class="priorityCheckBox">
+          <div class="datebox">12/31/2024</div>
+          <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
+        </div>
       </div>
     </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
+    <div style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;" 
+        class="modal fade summitModal" id="addGoal" tabindex="-1" role="dialog" aria-labelledby="Add Goal"
+        aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Goal</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group bmd-form-group">
+              <label class="summitModalText" for="inputGoal">How do you want to build a better you?</label>
+              <input type="text" class="form-control summitModalInput" id="inputGoal">
+            </div>
+            <div class="form-group bmd-form-group">
+              <label class="summitModalText" for="inputDate">When do you want to do it by?</label>
+              <input type="text" class="form-control summitModalInput" id="inputDate">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="cancelButton" type="button" class="btn btn-secondary"
+              data-dismiss="modal">CANCEL</button>&nbsp;&nbsp;
+            <button id="submitAddGoal" type="button" class="btn btn-primary" data-dismiss="modal">Let's do
+              it!</button>
+          </div>
+        </div>
       </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
-    <div class="goalsItemElement">
-      <div class="goalsItemText">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam explicabo minus
-      </div>
-      <div class="priorityCheckBox">
-        <div class="datebox">12/31/2024</div>
-        <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
-      </div>
-    </div>
   </div>
 
   <script src="scripts/jquery.min.js"></script>
