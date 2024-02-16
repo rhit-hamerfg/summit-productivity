@@ -235,7 +235,6 @@ body {
 }
 .welcomeGrid button {
     background-color: var(--summit-blue);
-    width: 250px;
     margin: 0 10px;
     font-size: 1.2rem;
     border: 3px solid;
@@ -537,7 +536,7 @@ body {
     border-color: var(--summit-white);
     background-color: var(--summit-blue);
 }
-.high {
+.ahigh {
     width: 70px;
     height: 4vh;
     border-radius: 30px;
@@ -545,7 +544,7 @@ body {
     background-color: var(--high-priority);
     margin: 15px;
 }
-.med{
+.bmed{
     width: 70px;
     height: 4vh;
     border-radius: 30px;
@@ -553,7 +552,7 @@ body {
     background-color: var(--med-priority);
     margin: 15px;
 }
-.low {
+.clow {
     width: 70px;
     height: 4vh;
     border-radius: 30px;

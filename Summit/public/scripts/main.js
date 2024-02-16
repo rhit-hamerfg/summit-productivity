@@ -17,6 +17,7 @@ rhit.FB_KEY_HABIT = "habit";
 rhit.FB_KEY_STREAK = "0";
 rhit.FB_KEY_GOAL = "goal";
 rhit.FB_KEY_DATE = "date";
+rhit.TODOS = 0;
 rhit.fbSingleTodoManager = null;
 rhit.fbSingleHabitManager = null;
 rhit.fbAuthManager = null;
@@ -68,15 +69,15 @@ rhit.HomePageController = class {
 		}
 
 		document.querySelector("#todoButton").onclick = (event) => {
-			window.location.href = '/todo.html'
+			window.location.href = `/todo.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#habitsButton").onclick = (event) => {
-			window.location.href = '/habits.html'
+			window.location.href = `/habits.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#goalsButton").onclick = (event) => {
-			window.location.href = '/goals.html'
+			window.location.href = `/goals.html?uid=${rhit.fbAuthManager.uid}`
 		}
 	}
 }
@@ -85,17 +86,17 @@ rhit.TodoPageController = class {
 	constructor() {
 		document.querySelector("#homeButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/home.html'
+			window.location.href = `/home.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#habitsButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/habits.html'
+			window.location.href = `/habits.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#goalsButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/goals.html'
+			window.location.href = `/goals.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#submitAddTodo").onclick = (event) => {
@@ -103,16 +104,17 @@ rhit.TodoPageController = class {
 			let priority = "";
 
 			if (document.getElementById("highPriority").checked) {
-				priority = "high";
+				priority = "ahigh";
 			} else if (document.getElementById("medPriority").checked) {
-				priority = "med";
+				priority = "bmed";
 			} else {
-				priority = "low";
+				priority = "clow";
 			}
 
 			console.log(priority);
 			console.log(todo);
 			rhit.fbTodoManager.add(todo, priority);
+			rhit.TODOS = rhit.TODOS + 1;
 		}
 
 		$("#addTodo").on("show.bs.modal", (event) => {
@@ -127,14 +129,14 @@ rhit.TodoPageController = class {
 
 	updateList() {
 		const newList = htmlToElement('<div id="todoContainer"></div>');
-
+		console.log(rhit.fbAuthManager.uid);
+		console.log(rhit.fbTodoManager.length);
 		for (let i = 0; i < rhit.fbTodoManager.length; i++) {
 			const todo = rhit.fbTodoManager.getTodoAtIndex(i);
-			const newTodo = this._createTodo(todo);
-			// newTodo.onclick = (event) => {
-			// 	window.location.href = `/image.html?id=${img.id}`;
-			// }
-			newList.appendChild(newTodo);
+			if (todo.author == rhit.fbAuthManager.uid) {
+				const newTodo = this._createTodo(todo);
+				newList.appendChild(newTodo);
+			}
 		}
 
 		const oldList = document.querySelector("#todoContainer");
@@ -144,21 +146,28 @@ rhit.TodoPageController = class {
 	}
 
 	_createTodo(Todo) {
-		return htmlToElement(`<div class="toDoItemElement">
+		const todo = htmlToElement(`<div class="toDoItemElement">
 		<div class="toDoItemText">${Todo.todo}</div>
 		<div class="priorityCheckBox">
         <div class="${Todo.priority}"></div>
         <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-      </div>
-	</div>`);
+      	</div>
+		</div>`);
+		const fbSingleTodoManager = new rhit.FbSingleTodoManager(Todo.id);
+		const checkbox = todo.querySelector(".checkBox");
+		checkbox.onclick = (event) => {
+			fbSingleTodoManager.delete();
+		}
+		return todo;
 	}
 }
 
 rhit.Todo = class {
-	constructor(id, todo, priority) {
+	constructor(id, todo, priority, author) {
 		this.id = id;
 		this.todo = todo;
 		this.priority = priority;
+		this.author = author;
 	}
 }
 
@@ -177,7 +186,7 @@ rhit.fbTodoManager = class {
 		})
 	}
 	beginListening(changeListener) {
-		let query = this._ref;
+		let query = this._ref.orderBy(rhit.FB_KEY_PRIORITY, "asc");
 		if (this._uid) {
 			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		}
@@ -198,6 +207,7 @@ rhit.fbTodoManager = class {
 			docSnapshot.id,
 			docSnapshot.get(rhit.FB_KEY_TODO),
 			docSnapshot.get(rhit.FB_KEY_PRIORITY),
+			docSnapshot.get(rhit.FB_KEY_AUTHOR),
 		);
 		return todo;
 	}
@@ -239,7 +249,8 @@ rhit.FbSingleTodoManager = class {
 			})
 	}
 	delete() {
-		return this._ref.delete();
+		rhit.TODOS = rhit.TODOS - 1;
+		return this._ref.delete()
 	}
 
 	get todo() {
@@ -259,17 +270,17 @@ rhit.HabitsPageController = class {
 	constructor() {
 		document.querySelector("#homeButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/home.html'
+			window.location.href = `/home.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#todoButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/todo.html'
+			window.location.href = `/todo.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#goalsButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/goals.html'
+			window.location.href = `/goals.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#submitAddHabit").onclick = (event) => {
@@ -292,39 +303,45 @@ rhit.HabitsPageController = class {
 	}
 
 	updateList() {
-		const newList = htmlToElement('<div class="habitsList"></div>');
-
+		const newList = htmlToElement('<div id="habitsList"></div>');
 		for (let i = 0; i < rhit.fbHabitsManager.length; i++) {
 			const habit = rhit.fbHabitsManager.getHabitAtIndex(i);
-			const newHabit = this._createHabit(habit);
-			// newTodo.onclick = (event) => {
-			// 	window.location.href = `/image.html?id=${img.id}`;
-			// }
-			newList.appendChild(newHabit);
+			if (habit.author == rhit.fbAuthManager.uid) {
+				const newHabit = this._createHabit(habit);
+				newList.appendChild(newHabit);
+			}
 		}
 
-		const oldList = document.querySelector(".habitsList");
-		oldList.removeAttribute("class");
+		const oldList = document.querySelector("#habitsList");
+		oldList.removeAttribute("id");
 		oldList.hidden = true;
 		oldList.parentElement.appendChild(newList);
 	}
 
 	_createHabit(Habit) {
-		return htmlToElement(`<div class="habitItemElement">
+		const habit = htmlToElement(`<div class="habitItemElement">
         <div class="habitItemText">${Habit.habit}</div>
         <div class="priorityCheckBox">
-          <div class="streakbox">${Habit.streak}x</div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
+        <div class="streakbox">${Habit.streak}x</div>
+        <div class="checkBox"><i class="material-icons checkmark">done</i></div>
         </div>
-      </div>`);
+      	</div>`);
+		const fbSingleHabitManager = new rhit.FbSingleHabitManager(Habit.id);
+		const checkbox = habit.querySelector(".checkBox");
+		checkbox.onclick = (event) => {
+			let streak = habit.streak;
+			fbSingleHabitManager.incrementStreak();
+		}
+		return habit;
 	}
 }
 
 rhit.Habit = class {
-	constructor(id, habit, streak) {
+	constructor(id, habit, streak, author) {
 		this.id = id;
 		this.habit = habit;
 		this.streak = streak;
+		this.author = author;
 	}
 }
 
@@ -345,7 +362,7 @@ rhit.fbHabitsManager = class {
 	}
 
 	beginListening(changeListener) {
-		let query = this._ref;
+		let query = this._ref.orderBy(rhit.FB_KEY_STREAK, "desc");
 		if (this._uid) {
 			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		}
@@ -369,6 +386,7 @@ rhit.fbHabitsManager = class {
 			docSnapshot.id,
 			docSnapshot.get(rhit.FB_KEY_HABIT),
 			docSnapshot.get(rhit.FB_KEY_STREAK),
+			docSnapshot.get(rhit.FB_KEY_AUTHOR),
 		);
 		return habit;
 	}
@@ -413,6 +431,14 @@ rhit.FbSingleHabitManager = class {
 		return this._ref.delete();
 	}
 
+	incrementStreak() {
+		const streak = this._documentSnapshot[rhit.FB_KEY_STREAK] || 0;
+		const newStreak = streak + 1;
+		this._ref.update({
+			[rhit.FB_KEY_STREAK]: streak,
+		})
+	}
+
 	get habit() {
 		return this._documentSnapshot.get(rhit.FB_KEY_HABIT);
 	}
@@ -430,17 +456,17 @@ rhit.GoalsPageController = class {
 	constructor() {
 		document.querySelector("#homeButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/home.html'
+			window.location.href = `/home.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#todoButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/todo.html'
+			window.location.href = `/todo.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
 		document.querySelector("#habitsButton").onclick = (event) => {
 			console.log("Redirect");
-			window.location.href = '/habits.html'
+			window.location.href = `/habits.html?uid=${rhit.fbAuthManager.uid}`
 		}
 		document.querySelector("#submitAddGoal").onclick = (event) => {
 			const goal = document.querySelector("#inputGoal").value;
@@ -616,7 +642,7 @@ rhit.fbAuthManager = class {
 
 rhit.checkForRedirects = function () {
 	if (document.querySelector(".loginPage") && rhit.fbAuthManager.isSignedIn) {
-		window.location.href = "/home.html";
+		window.location.href = `/home.html?uid=${rhit.fbAuthManager.uid}`;
 	}
 	if (document.querySelector(".homePage") && !rhit.fbAuthManager.isSignedIn) {
 		window.location.href = "/index.html";
