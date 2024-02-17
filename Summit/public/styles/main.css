@@ -614,6 +614,10 @@ body {
     background-color: var(--summit-white);
     color: var(--summit-blue);
 }
+#goalsContainer {
+    width: 100%;
+    height: 100%;
+}
 .goalsItemElement {
     display: flex;
     flex-direction: row;

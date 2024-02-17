@@ -17,9 +17,11 @@ rhit.FB_KEY_HABIT = "habit";
 rhit.FB_KEY_STREAK = "0";
 rhit.FB_KEY_GOAL = "goal";
 rhit.FB_KEY_DATE = "date";
+rhit.FB_KEY_QUOTE = "quote";
 rhit.TODOS = 0;
 rhit.fbSingleTodoManager = null;
 rhit.fbSingleHabitManager = null;
+rhit.fbQuoteManager = null;
 rhit.fbAuthManager = null;
 
 //From CSSE280 MovieQuotes FA
@@ -79,6 +81,52 @@ rhit.HomePageController = class {
 		document.querySelector("#goalsButton").onclick = (event) => {
 			window.location.href = `/goals.html?uid=${rhit.fbAuthManager.uid}`
 		}
+
+		rhit.fbQuoteManager.beginListening(this.updateQuote.bind(this));
+	}
+
+	updateQuote() {
+		const quote = htmlToElement(`<div id="quote"></div>`);
+		let index = Math.floor((Math.random() * 100) / 2);
+		if (index == 50) {
+			index = 49;
+		}
+		let addQuote = rhit.fbQuoteManager.getQuoteAtIndex(index);
+		quote.appendChild(addQuote.text);
+		const oldQuote = document.querySelector("#quote");
+		oldQuote.removeAttribute("id");
+		oldQuote.hidden = true;
+		oldQuote.parentElement.appendChild(quote);
+	}
+}
+
+rhit.fbQuoteManager = class {
+	constructor(uid) {
+		this._uid = uid;
+		this._documentSnapshots = [];
+		this._ref = firebase.firestore().collection("quotes");
+		this._unsubscribe = null;
+	}
+	beginListening(changeListener) {
+		let query = this._ref.orderBy(rhit.FB_KEY_PRIORITY, "asc");
+		if (this._uid) {
+			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
+		}
+		this._unsubscribe = query.onSnapshot((querySnapshot) => {
+			this._documentSnapshots = querySnapshot.docs;
+			changeListener();
+		});
+	}
+	stopListening() {
+		this._unsubscribe();
+	}
+	get length() {
+		return this._documentSnapshots.length;
+	}
+	getQuoteAtIndex(index) {
+		let postsRef = firebase.firestore().collection("posts");
+		let queryRef = postsRef.where("index", ">=", index).orderBy("index").limit(1);
+		return queryRef;
 	}
 }
 
@@ -459,26 +507,25 @@ rhit.GoalsPageController = class {
 			window.location.href = `/home.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
+		document.querySelector("#habitsButton").onclick = (event) => {
+			console.log("Redirect");
+			window.location.href = `/habits.html?uid=${rhit.fbAuthManager.uid}`
+		}
+
 		document.querySelector("#todoButton").onclick = (event) => {
 			console.log("Redirect");
 			window.location.href = `/todo.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
-		document.querySelector("#habitsButton").onclick = (event) => {
-			console.log("Redirect");
-			window.location.href = `/habits.html?uid=${rhit.fbAuthManager.uid}`
-		}
 		document.querySelector("#submitAddGoal").onclick = (event) => {
 			const goal = document.querySelector("#inputGoal").value;
-			let date = document.querySelector("#inputDate").value;
-
-			console.log(goal);
-			console.log(date);
+			const date = document.querySelector("#inputDate").value;
 			rhit.fbGoalsManager.add(goal, date);
 		}
 
 		$("#addGoal").on("show.bs.modal", (event) => {
 			document.querySelector("#inputGoal").value = "";
+			document.querySelector("#inputDate").value = "";
 		});
 		$("#addGoal").on("shown.bs.modal", (event) => {
 			document.querySelector("#inputGoal").focus();
@@ -489,14 +536,12 @@ rhit.GoalsPageController = class {
 
 	updateList() {
 		const newList = htmlToElement('<div id="goalsContainer"></div>');
-
 		for (let i = 0; i < rhit.fbGoalsManager.length; i++) {
 			const goal = rhit.fbGoalsManager.getGoalAtIndex(i);
-			const newGoal = this._createGoal(goal);
-			// newTodo.onclick = (event) => {
-			// 	window.location.href = `/image.html?id=${img.id}`;
-			// }
-			newList.appendChild(newGoal);
+			if (goal.author == rhit.fbAuthManager.uid) {
+				const newGoal = this._createGoal(goal);
+				newList.appendChild(newGoal);
+			}
 		}
 
 		const oldList = document.querySelector("#goalsContainer");
@@ -506,21 +551,28 @@ rhit.GoalsPageController = class {
 	}
 
 	_createGoal(Goal) {
-		return htmlToElement(`<div class="goalsItemElement">
+		const goal = htmlToElement(`<div class="goalsItemElement">
         <div class="goalsItemText">${Goal.goal}</div>
         <div class="priorityCheckBox">
           <div class="datebox">${Goal.date}</div>
           <div class="checkBox"><i class="material-icons checkmark">emoji_events</i></div>
         </div>
       </div>`);
+		const fbSingleGoalManager = new rhit.FbSingleGoalManager(Goal.id);
+		const checkbox = goal.querySelector(".checkBox");
+		checkbox.onclick = (event) => {
+			fbSingleGoalManager.delete();
+		}
+		return goal;
 	}
 }
 
 rhit.Goal = class {
-	constructor(id, goal, date) {
+	constructor(id, goal, date, author) {
 		this.id = id;
 		this.goal = goal;
 		this.date = date;
+		this.author = author;
 	}
 }
 
@@ -539,7 +591,7 @@ rhit.fbGoalsManager = class {
 		})
 	}
 	beginListening(changeListener) {
-		let query = this._ref;
+		let query = this._ref.orderBy(rhit.FB_KEY_DATE, "asc");
 		if (this._uid) {
 			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		}
@@ -560,6 +612,7 @@ rhit.fbGoalsManager = class {
 			docSnapshot.id,
 			docSnapshot.get(rhit.FB_KEY_GOAL),
 			docSnapshot.get(rhit.FB_KEY_DATE),
+			docSnapshot.get(rhit.FB_KEY_AUTHOR),
 		);
 		return goal;
 	}
@@ -601,7 +654,7 @@ rhit.FbSingleGoalManager = class {
 			})
 	}
 	delete() {
-		return this._ref.delete();
+		return this._ref.delete()
 	}
 
 	get goal() {
@@ -664,6 +717,9 @@ rhit.initializePage = function () {
 		new rhit.LoginPageController();
 	}
 	if (document.querySelector(".homePage")) {
+		const uid = urlParams.get("id");
+		rhit.fbQuoteManager = new rhit.fbQuoteManager(uid);
+		console.log("QUOTE Manager Initialized");
 		new rhit.HomePageController();
 	}
 	if (document.querySelector(".todoPage")) {
