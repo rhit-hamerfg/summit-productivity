@@ -681,6 +681,23 @@ body {
         font-size: 7rem;
     }
 }
+@media (max-width: 1245px) {
+    .pomodoroGrid {
+        align-self: auto;
+    }
+    .outerRing{
+        height: 350px;
+        width: 350px;
+    }
+    .innerCircle{
+        height: 330px;
+        width: 330px;
+    }
+    #welcomeText {
+        font-size: 5rem;
+        font-weight: 400;
+    }
+}
 @media (max-width: 950px) {
     /*Home Page Properties*/
     #quote {
@@ -722,6 +739,19 @@ body {
         margin: 0;
     }
 }
+@media (max-width: 850px) {
+    .outerRing {
+        height: 275px;
+        width: 275px;
+    }
+    .innerCircle {
+        height: 255px;
+        width: 255px;
+    }
+    #welcomeText {
+        font-size: 3rem;
+    }
+}
 @media (max-width: 750px) {
     /*Login Page Properties*/
     #loginHeader {
@@ -757,7 +787,7 @@ body {
     }
     .homePage {
         grid-template-columns: 90vw;
-        grid-template-rows: auto 100px auto;
+        grid-template-rows: auto auto auto;
         overflow: scroll;
         margin: 60px 0 0 0;
         gap: 0;
@@ -765,7 +795,7 @@ body {
     }
     .welcomeGrid {
         grid-row: 1;
-        grid-column: 1 / span 2;
+        grid-column: 1;
         gap: 12px;
         padding: 10px;
     }
@@ -774,8 +804,8 @@ body {
         font-weight: 500;
     }
     .quoteGrid {
-        grid-row: 2;
-        grid-column: 1 / span 2;
+        grid-row: 3;
+        grid-column: 1;
         margin: 0;
         padding: 10px;
         height: 80px;
@@ -791,8 +821,9 @@ body {
         gap: 10px;
         margin-bottom: auto;
     }
-    .pomodoroTimer {
-        margin: 0;
+    .pomodoroGrid {
+        grid-row: 2;
+        grid-column: 1;
     }
     #outerRing {
         height: 200px;
