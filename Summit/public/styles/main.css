@@ -331,6 +331,7 @@ body {
 }
 #timer {
     place-self: center;
+    user-select: none;
     font: 800 5rem "Chakra Petch", sans-serif;
 }
 /*Habits Page Styling*/

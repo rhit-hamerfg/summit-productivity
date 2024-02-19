@@ -43,19 +43,12 @@ rhit.LoginPageController = class {
 	constructor() {
 		const inputEmail = document.querySelector("#inputEmail");
 		const inputPassword = document.querySelector("#inputPassword");
-		const inputName = document.querySelector("#inputName");
 
 		document.querySelector("#createAccountButton").onclick = (event) => {
-			console.log(`Create account for email: ${inputEmail.value} password: ${inputPassword.value} name ${inputName.value}`);
 			firebase.auth().createUserWithEmailAndPassword(inputEmail.value, inputPassword.value)
-				.then(function() {
-					// userCredential.user.updateProfile({displayName: `${inputName}`});
-				})
 				.catch(function (error) {
 				var errorCode = error.code;
 				var errorMessage = error.message;
-				// ..
-				console.log("Account creation error.");
 			});
 		}
 
