@@ -18,9 +18,16 @@ rhit.FB_KEY_STREAK = "0";
 rhit.FB_KEY_GOAL = "goal";
 rhit.FB_KEY_DATE = "date";
 rhit.FB_KEY_QUOTE = "quote";
-rhit.TODOS = 0;
+rhit.FB_KEY_USER = "user";
+rhit.FB_KEY_NAME = "name"
+rhit.FB_KEY_NUMTODOS = "numTodos";
+rhit.FB_KEY_NUMHABITS = "numHabits";
+rhit.FB_KEY_NUMGOALS = "numGoals";
+rhit.FB_KEY_INDEX = 49;
 rhit.fbSingleTodoManager = null;
 rhit.fbSingleHabitManager = null;
+rhit.fbSingleGoalManager = null;
+rhit.fbUserManager = null;
 rhit.fbQuoteManager = null;
 rhit.fbAuthManager = null;
 
@@ -40,7 +47,11 @@ rhit.LoginPageController = class {
 
 		document.querySelector("#createAccountButton").onclick = (event) => {
 			console.log(`Create account for email: ${inputEmail.value} password: ${inputPassword.value} name ${inputName.value}`);
-			firebase.auth().createUserWithEmailAndPassword(inputEmail.value, inputPassword.value).catch(function (error) {
+			firebase.auth().createUserWithEmailAndPassword(inputEmail.value, inputPassword.value)
+				.then(function() {
+					// userCredential.user.updateProfile({displayName: `${inputName}`});
+				})
+				.catch(function (error) {
 				var errorCode = error.code;
 				var errorMessage = error.message;
 				// ..
@@ -61,7 +72,7 @@ rhit.LoginPageController = class {
 }
 
 rhit.HomePageController = class {
-	constructor() {
+	constructor(uid) {
 		document.querySelector("#signOutButton").onclick = (event) => {
 			firebase.auth().signOut().then(function () {
 				window.location.href = '/';
@@ -82,6 +93,29 @@ rhit.HomePageController = class {
 			window.location.href = `/goals.html?uid=${rhit.fbAuthManager.uid}`
 		}
 
+		this.progress = null;
+		this.progressStart = 0;
+		this.progressEnd = 25 * 60;
+		let speed = 1000;
+		this.started = false;
+		let secondsRemaining = 0;
+		let minutesRemaining = 0;
+
+		document.querySelector(".outerRing").onclick = (event) => {
+			if (!this.started) {
+				this.started = true;
+				this.startStopProgress(secondsRemaining, minutesRemaining, speed);
+			}
+			else {
+				this.started = false;
+				this.startStopProgress(secondsRemaining, minutesRemaining, speed);
+			}
+		}
+
+		document.querySelector(".outerRing").addEventListener("dblclick", (event) => {
+			this.resetValues();
+		})
+
 		rhit.fbQuoteManager.beginListening(this.updateQuote.bind(this));
 	}
 
@@ -92,11 +126,49 @@ rhit.HomePageController = class {
 			index = 49;
 		}
 		let addQuote = rhit.fbQuoteManager.getQuoteAtIndex(index);
-		quote.appendChild(addQuote.text);
+		quote.innerHTML = (addQuote.quote);
 		const oldQuote = document.querySelector("#quote");
 		oldQuote.removeAttribute("id");
 		oldQuote.hidden = true;
 		oldQuote.parentElement.appendChild(quote);
+	}
+
+	updateName() {
+		if (fbAuthManager.name == null) {
+			console.log("No name");
+		}
+	}
+
+	timer(secondsRemaining, minutesRemaining) {
+		this.progressStart++;
+		secondsRemaining = Math.floor((this.progressEnd - this.progressStart) % 60);
+		minutesRemaining = Math.floor((this.progressEnd - this.progressStart) / 60);
+		console.log(minutesRemaining, secondsRemaining);
+		document.querySelector("#seconds").innerHTML = secondsRemaining;
+		document.querySelector("#minutes").innerHTML = minutesRemaining;
+		if (this.progressStart == this.progressEnd) {
+			clearInterval(this.progress);
+			this.progress = null;
+		}
+	}
+
+	startStopProgress(secondsRemaining, minutesRemaining, speed) {
+		if (this.started) {
+			this.progress = setInterval(() => this.timer(secondsRemaining, minutesRemaining), speed)
+		} else {
+			clearInterval(this.progress);
+			this.progress = null;
+		}
+	}
+
+	resetValues() {
+		document.querySelector("#minutes").innerHTML = "25";
+		document.querySelector("#seconds").innerHTML = "00";
+		this.started = false;
+		clearInterval(this.progress);
+		this.progress = null;
+		this.progressStart = 0;
+		this.progresEnd = 25 * 60;;
 	}
 }
 
@@ -108,10 +180,7 @@ rhit.fbQuoteManager = class {
 		this._unsubscribe = null;
 	}
 	beginListening(changeListener) {
-		let query = this._ref.orderBy(rhit.FB_KEY_PRIORITY, "asc");
-		if (this._uid) {
-			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
-		}
+		const query = firebase.firestore().collection("quotes").orderBy("index", "asc");
 		this._unsubscribe = query.onSnapshot((querySnapshot) => {
 			this._documentSnapshots = querySnapshot.docs;
 			changeListener();
@@ -124,9 +193,21 @@ rhit.fbQuoteManager = class {
 		return this._documentSnapshots.length;
 	}
 	getQuoteAtIndex(index) {
-		let postsRef = firebase.firestore().collection("posts");
-		let queryRef = postsRef.where("index", ">=", index).orderBy("index").limit(1);
-		return queryRef;
+		const docSnapshot = this._documentSnapshots[index];
+		const quote = new rhit.Quote(
+			docSnapshot.id,
+			docSnapshot.get(rhit.FB_KEY_QUOTE),
+			index,
+		);
+		return quote;
+	}
+}
+
+rhit.Quote = class {
+	constructor(id, quote, index) {
+		this.id = id;
+		this.quote = quote;
+		this.index = index;
 	}
 }
 
@@ -162,7 +243,6 @@ rhit.TodoPageController = class {
 			console.log(priority);
 			console.log(todo);
 			rhit.fbTodoManager.add(todo, priority);
-			rhit.TODOS = rhit.TODOS + 1;
 		}
 
 		$("#addTodo").on("show.bs.modal", (event) => {
@@ -171,6 +251,13 @@ rhit.TodoPageController = class {
 		$("#addTodo").on("shown.bs.modal", (event) => {
 			document.querySelector("#inputTodo").focus();
 		});
+
+		document.querySelector("#submitEditTodo").onclick = (event) => {
+			rhit.fbSingleTodoManager = new rhit.FbSingleTodoManager(docSnapshot.id);
+			const editTodo = rhit.fbTodoManager.getTodoAtIndex
+			const todo = document.querySelector("#inputTodo").value;
+			rhit.fbSingleTodoManager.updateTodo(todo);
+		}
 
 		rhit.fbTodoManager.beginListening(this.updateList.bind(this));
 	}
@@ -202,6 +289,32 @@ rhit.TodoPageController = class {
       	</div>
 		</div>`);
 		const fbSingleTodoManager = new rhit.FbSingleTodoManager(Todo.id);
+		const oldPriority = todo.querySelector(`.${Todo.priority}`);
+		oldPriority.onclick = (event) => {
+			if (oldPriority.className == "ahigh") {
+				oldPriority.className = "bmed";
+			}
+			else if (oldPriority.className == "bmed") {
+				oldPriority.className = "clow";
+			}
+			else {
+				oldPriority.className = "ahigh";
+			}
+			fbSingleTodoManager.update(Todo.todo, oldPriority.className);
+		}
+		const oldTodo = todo.querySelector(".toDoItemText");
+		oldTodo.onclick = (event) => {
+			console.log("edit modal");
+			$("#editTodo").modal("show");
+
+			document.querySelector("#submitEditTodo").onclick = (event) => {
+				rhit.fbSingleTodoManager = new rhit.FbSingleTodoManager(Todo.id);
+				const todo = document.querySelector("#inputEditTodo").value;
+				console.log(todo);
+				rhit.fbSingleTodoManager.updateTodo(todo);
+				console.log("Todo edited");
+			}
+		}
 		const checkbox = todo.querySelector(".checkBox");
 		checkbox.onclick = (event) => {
 			fbSingleTodoManager.delete();
@@ -289,15 +402,13 @@ rhit.FbSingleTodoManager = class {
 			[rhit.FB_KEY_TODO]: todo,
 			[rhit.FB_KEY_PRIORITY]: priority,
 		})
-			.then(() => {
-				console.log("Updated");
-			})
-			.catch(function (error) {
-				console.error("Error: ", error);
-			})
+	}
+	updateTodo(todo) {
+		this._ref.update({
+			[rhit.FB_KEY_TODO]: todo,
+		})
 	}
 	delete() {
-		rhit.TODOS = rhit.TODOS - 1;
 		return this._ref.delete()
 	}
 
@@ -333,7 +444,7 @@ rhit.HabitsPageController = class {
 
 		document.querySelector("#submitAddHabit").onclick = (event) => {
 			const habit = document.querySelector("#inputHabit").value;
-			const streak = 0;
+			let streak = 0;
 
 			console.log(habit);
 			console.log(streak);
@@ -375,10 +486,25 @@ rhit.HabitsPageController = class {
         </div>
       	</div>`);
 		const fbSingleHabitManager = new rhit.FbSingleHabitManager(Habit.id);
+		const oldHabit = habit.querySelector(".habitItemText");
+		oldHabit.onclick = (event) => {
+			console.log("edit modal");
+			$("#editHabit").modal("show");
+			rhit.fbSingleHabitManager = new rhit.FbSingleHabitManager(Habit.id);
+			document.querySelector("#submitEditHabit").onclick = (event) => {
+				const habit = document.querySelector("#inputEditHabit").value;
+				console.log(habit);
+				rhit.fbSingleHabitManager.update(habit, Habit.streak);;
+			}
+			document.querySelector("#deleteButton").onclick = (event) => {
+				rhit.fbSingleHabitManager.delete();
+			}
+		}
 		const checkbox = habit.querySelector(".checkBox");
 		checkbox.onclick = (event) => {
-			let streak = habit.streak;
-			fbSingleHabitManager.incrementStreak();
+			let streak = Habit.streak;
+			streak = streak + 1;
+			fbSingleHabitManager.update(Habit.habit, streak);
 		}
 		return habit;
 	}
@@ -479,14 +605,6 @@ rhit.FbSingleHabitManager = class {
 		return this._ref.delete();
 	}
 
-	incrementStreak() {
-		const streak = this._documentSnapshot[rhit.FB_KEY_STREAK] || 0;
-		const newStreak = streak + 1;
-		this._ref.update({
-			[rhit.FB_KEY_STREAK]: streak,
-		})
-	}
-
 	get habit() {
 		return this._documentSnapshot.get(rhit.FB_KEY_HABIT);
 	}
@@ -559,6 +677,20 @@ rhit.GoalsPageController = class {
         </div>
       </div>`);
 		const fbSingleGoalManager = new rhit.FbSingleGoalManager(Goal.id);
+		const oldGoal = goal.querySelector(".goalsItemText");
+		$("#editGoal").on("show.bs.modal", (event) => {
+			document.querySelector("#inputEditGoal").value = Goal.goal;
+			document.querySelector("#inputEditDate").value = Goal.date;
+		});
+		oldGoal.onclick = (event) => {
+			$("#editGoal").modal("show");
+			rhit.fbSingleGoalManager = new rhit.FbSingleGoalManager(Goal.id);
+			document.querySelector("#submitEditGoal").onclick = (event) => {
+				const goal = document.querySelector("#inputEditGoal").value;
+				const date = document.querySelector("#inputEditDate").value;
+				rhit.fbSingleGoalManager.update(goal, date);
+			}
+		}
 		const checkbox = goal.querySelector(".checkBox");
 		checkbox.onclick = (event) => {
 			fbSingleGoalManager.delete();
@@ -691,6 +823,9 @@ rhit.fbAuthManager = class {
 	get uid() {
 		return this._user.uid;
 	}
+	get name() {
+		return this._user.displayName;
+	}
 }
 
 rhit.checkForRedirects = function () {
@@ -719,8 +854,7 @@ rhit.initializePage = function () {
 	if (document.querySelector(".homePage")) {
 		const uid = urlParams.get("id");
 		rhit.fbQuoteManager = new rhit.fbQuoteManager(uid);
-		console.log("QUOTE Manager Initialized");
-		new rhit.HomePageController();
+		new rhit.HomePageController(uid);
 	}
 	if (document.querySelector(".todoPage")) {
 		const uid = urlParams.get("id");

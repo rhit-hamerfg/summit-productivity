@@ -35,10 +35,6 @@
     <div id="habitsList">
       <div class="habitItemElement">
         <div class="habitItemText"></div>
-        <div class="priorityCheckBox">
-          <div class="streakbox"></div>
-          <div class="checkBox"><i class="material-icons checkmark">done</i></div>
-        </div>
       </div>
     </div>
     <div style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;" 
@@ -51,7 +47,7 @@
           </div>
           <div class="modal-body">
             <div class="form-group bmd-form-group">
-              <label class="summitModalText" for="inputTodo">How do you want to build a better you?</label>
+              <label class="summitModalText" for="inputHabit">How do you want to build a better you?</label>
               <input type="text" class="form-control summitModalInput" id="inputHabit">
             </div>
           </div>
@@ -59,6 +55,31 @@
             <button id="cancelButton" type="button" class="btn btn-secondary"
               data-dismiss="modal">CANCEL</button>&nbsp;&nbsp;
             <button id="submitAddHabit" type="button" class="btn btn-primary" data-dismiss="modal">Let's do
+              it!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;" 
+        class="modal fade summitModal" id="editHabit" tabindex="-1" role="dialog" aria-labelledby="Edit Habit"
+        aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Habit</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group bmd-form-group">
+              <label class="summitModalText" for="inputTodo">What should we do differently?</label>
+              <input type="text" class="form-control summitModalInput" id="inputEditHabit">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="deleteButton" type="button" class="btn btn-secondary"
+            data-dismiss="modal">DELETE</button>&nbsp;&nbsp;
+            <button id="cancelButton" type="button" class="btn btn-secondary"
+              data-dismiss="modal">CANCEL</button>&nbsp;&nbsp;
+            <button id="submitEditHabit" type="button" class="btn btn-primary" data-dismiss="modal">Let's do
               it!</button>
           </div>
         </div>

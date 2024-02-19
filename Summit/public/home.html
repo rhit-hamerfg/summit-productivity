@@ -16,49 +16,74 @@
   <title>Summit</title>
 </head>
 
-<body class="bg" style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;">
+<body class="bg"
+  style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;">
   <nav id="topNavbar" class="navbar navbar-dark fixed-top">
     <a id="summitLogoText" class="navbar-brand" href="/home.html">Summit&nbsp;&nbsp;<img id="summitLogo"
         src="images/summitLogo.png" alt="Summit Logo"></a>
     <button id="homeButton" class="navbarButton"><i class="material-icons navbarIcons">home</i>&nbsp;&nbsp;Home</button>
-    <button id="todoButton" class="navbarButton"><i class="material-icons navbarIcons">list</i>&nbsp;&nbsp;To-Do</button>
-    <button id="habitsButton" class="navbarButton"><i class="material-icons navbarIcons">apps</i>&nbsp;&nbsp;Habits</button>
-    <button id="goalsButton" class="navbarButton"><i class="material-icons navbarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
+    <button id="todoButton" class="navbarButton"><i
+        class="material-icons navbarIcons">list</i>&nbsp;&nbsp;To-Do</button>
+    <button id="habitsButton" class="navbarButton"><i
+        class="material-icons navbarIcons">apps</i>&nbsp;&nbsp;Habits</button>
+    <button id="goalsButton" class="navbarButton"><i
+        class="material-icons navbarIcons">task_alt</i>&nbsp;&nbsp;Goals</button>
   </nav>
 
   <div class="homePage">
     <div class="welcomeGrid">
-      <div id="welcomeText">Welcome Fred</div>
-      <button id="myAccountButton">My Account</button>
+      <div id="welcomeText">Welcome</div>
       <button id="signOutButton">Sign Out</button>
     </div>
     <div class="quoteGrid">
       <div id="quote"></div>
     </div>
-    <div class="overviewGrid">
-      <div class="pomodoroTimer">
-        <div class="outerRing">
-          <div class="innerCircle">
-            <div id="timer">25:00</div>
+    <div class="pomodoroGrid">
+      <div class="outerRing">
+        <div class="innerCircle">
+          <div id="timer">
+            <span id="minutes">25</span>
+            <span id="colon">:</span>
+            <span id="seconds">00</span>
           </div>
         </div>
       </div>
-      <div id="todoGlance"> todos remaining</div>
-      <div id="goalsGlance">Working on 4 goals</div>
-      <div id="habitsGlance">Implementing 12 habits</div>
     </div>
-  </div>
+    <div
+      style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;"
+      class="modal fade summitModal" id="addHabit" tabindex="-1" role="dialog" aria-labelledby="Add Habit"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Habit</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group bmd-form-group">
+              <label class="summitModalText" for="inputTodo">How do you want to build a better you?</label>
+              <input type="text" class="form-control summitModalInput" id="inputHabit">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="cancelButton" type="button" class="btn btn-secondary"
+              data-dismiss="modal">CANCEL</button>&nbsp;&nbsp;
+            <button id="submitAddHabit" type="button" class="btn btn-primary" data-dismiss="modal">Let's do
+              it!</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <script src="scripts/jquery.min.js"></script>
-  <script src="scripts/popper.js"></script>
-  <script src="scripts/bootstrap-material-design.js"></script>
-  <script>$("body").bootstrapMaterialDesign();</script>
-  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-  <script src="/__/firebase/init.js"></script>
-  <script src="scripts/main.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/popper.js"></script>
+    <script src="scripts/bootstrap-material-design.js"></script>
+    <script>$("body").bootstrapMaterialDesign();</script>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 
-</html> 
+</html>

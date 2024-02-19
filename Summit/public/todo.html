@@ -76,6 +76,29 @@
         </div>
       </div>
     </div>
+    <div style="background-image: url('/images/summitbackgroundglass.png'); background-repeat: no-repeat; background-size: cover;" 
+        class="modal fade summitModal" id="editTodo" tabindex="-1" role="dialog" aria-labelledby="Edit Todo"
+        aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Todo</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group bmd-form-group">
+              <label class="summitModalText" for="inputTodo">What should we do differently?</label>
+              <input type="text" class="form-control summitModalInput" id="inputEditTodo">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="cancelButton" type="button" class="btn btn-secondary"
+              data-dismiss="modal">CANCEL</button>&nbsp;&nbsp;
+            <button id="submitEditTodo" type="button" class="btn btn-primary" data-dismiss="modal">Let's do
+              it!</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="scripts/jquery.min.js"></script>

@@ -128,14 +128,27 @@ body {
 .modal-content {
     background-color: transparent;
     box-shadow: none;
+    border-color: transparent;
+}
+.summitModalInput {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+.summitModalInput:active {
+    border-color: transparent !important;
 }
 .summitModalText {
+    background-color: transparent !important;
     color: var(--summit-white) !important;
 }
 .modal-footer button {
     background-color: var(--summit-blue) !important;
     color: var(--summit-white) !important;
     border-radius: 30px;
+}
+
+.priority {
+    background-color: transparent !important;
 }
 /*Login Page Properties*/
 /*-------------------------------------------------------------*/
@@ -205,9 +218,9 @@ body {
     overflow: hidden;
     height: 85%;
     display: grid;
-    grid-template-columns: 45vw 45vw;
-    margin: 138px 30px 30px 30px;
-    grid-template-rows: auto;
+    grid-template-columns: 45vw 40vw;
+    margin: 138px 30px 30px 50px;
+    grid-template-rows: 45vh auto;
     gap: 50px;
     justify-content: center;
 }
@@ -215,7 +228,7 @@ body {
     grid-column: 1;
     grid-row: 1;
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 50% 50%;
     grid-template-rows: 60% 30%;
     justify-content: center;
     gap: 30px;
@@ -230,10 +243,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-shrink: 1;
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 7rem;
 }
 .welcomeGrid button {
+    grid-column: 1 / span 2;
+    grid-row: 2;
     background-color: var(--summit-blue);
     margin: 0 10px;
     font-size: 1.2rem;
@@ -251,85 +265,53 @@ body {
     background-color: var(--summit-white);
     color: var(--summit-blue);
 }
-.quoteGrid {
+.infoGrid {
     grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.quoteGrid {
+    grid-column: 1 / span 2;
     grid-row: 2; 
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
     justify-self: center;
+    width: 100%;
     margin: 50px;
 }
 #quote {
     justify-self: center;
-    font-weight: 700;
-    font-size: 3rem;
-    background-color: #004591;
-    border-radius: 50px;
+    font-size: 2.5rem;
+    background-color: var(--summit-blue);
+    border-radius: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     text-align: center;
     padding: 0 80px;
 }
-.overviewGrid {
+.pomodoroGrid {
     grid-column: 2;
-    grid-row: 1 / span 2;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto 200px;
+    grid-row: 1;
+    display: flex;
+    justify-content: center;
     gap: 30px;
     padding: 20px;
-    margin-bottom: 50px;
-}
-#todoGlance {
-    background-color: #004591;
-    grid-column: 1;
-    grid-row: 3;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-}
-#goalsGlance {
-    background-color: #004591;
-    grid-column: 2;
-    grid-row: 3;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-}
-#habitsGlance {
-    background-color: #004591;
-    grid-column: 3;
-    grid-row: 3;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-}
-.pomodoroTimer {
-    background-color: transparent;
-    grid-row: 1 / span 2;
-    grid-column: 1 / span 3;
-    border-radius: 50px;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 50px;
+    align-self: start;
 }
 .outerRing {
     background-color: var(--bayern-blue);
     border-radius: 50%;
-    height: 400px;
-    width: 400px;
+    height: 450px;
+    width: 450px;
     grid-row: 1;
     grid-column: 1;
     align-self: center;
@@ -339,8 +321,8 @@ body {
 .innerCircle {
     background-color: var(--summit-blue);
     border-radius: 50%;
-    height: 375px;
-    width: 375px;
+    height: 430px;
+    width: 430px;
     grid-row: 1;
     grid-column: 1;
     display: grid;
@@ -355,12 +337,13 @@ body {
 /*-------------------------------------------------------------*/
 .habitsPage {
     overflow: scroll;
+    height: 85%;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto;
-    align-items: start;
-    height: 85%;
     margin: 138px 30px 30px 30px;
+    grid-template-rows: 25% 75%;
+    gap: 20px;
+    justify-content: center;
 }
 .habitsPage::-webkit-scrollbar {
     display: none;
@@ -385,13 +368,13 @@ body {
 }
 #habitsHeader button {
     background-color: var(--summit-blue);
+    border: 3px solid var(--summit-white);
     font-family: 'Comfortaa', sans-serif;
     width: 10rem;
     height: 3rem;
     border: 3px solid;
     margin: 0 40px;
     border-radius: 30px;
-    border-color: transparent;
     color: var(--summit-white);
     display: flex;
     justify-content: center;
@@ -403,13 +386,15 @@ body {
 #habitsHeader button:hover {
     color: var(--summit-blue);
     background-color: var(--summit-white);
+    border-color: var(--summit-white);
 }
-.habitsList {
+#habitsList {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    text-align: center;
     flex-wrap: nowrap;
-    justify-content: center;
+    align-items: center;
 }
 .habitItemElement {
     display: flex;
@@ -417,7 +402,7 @@ body {
     justify-content: space-around;
     background-color: transparent;
     align-items: center;
-    width: auto;
+    width: 100%;
     flex-shrink: 1;
     text-align: center;
 }
@@ -456,7 +441,7 @@ body {
     display: grid;
     grid-template-columns: auto;
     margin: 138px 30px 30px 30px;
-    grid-template-rows: auto;
+    grid-template-rows: 25% 75%;
     gap: 20px;
     justify-content: center;
 }
@@ -487,13 +472,13 @@ body {
 }
 #todoHeader button {
     background-color: var(--summit-blue);
+    border: 3px solid var(--summit-white);
     font-family: 'Comfortaa', sans-serif;
     width: 10rem;
     height: 3rem;
     border: 3px solid;
     margin: 0 40px;
     border-radius: 30px;
-    border-color: transparent;
     color: var(--summit-white);
     display: flex;
     justify-content: center;
@@ -501,6 +486,11 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
     transition: all 0.4s;
+}
+#todoHeader button:hover {
+    background-color: var(--summit-white);
+    color: var(--summit-blue);
+    border-color: var(--summit-white);
 }
 .toDoItemElement {
     display: flex;
@@ -530,7 +520,7 @@ body {
     font-family: 'Comfortaa', sans-serif;
     font-size: 1.2rem;
     font-weight: 400;
-    transition: all 0.4s;
+    transition: all 0.5s;
 }
 .toDoItemText:hover {
     border-color: var(--summit-white);
@@ -540,25 +530,40 @@ body {
     width: 70px;
     height: 4vh;
     border-radius: 30px;
-    border: 3px solid var(--summit-blue-transparent);
+    border: 3px solid var(--summit-blue);
     background-color: var(--high-priority);
     margin: 15px;
+    transition: all 0.5s;
+}
+.ahigh:hover {
+    border-color: var(--summit-white);
+    
 }
 .bmed{
     width: 70px;
     height: 4vh;
     border-radius: 30px;
-    border: 3px solid var(--summit-blue-transparent);
+    border: 3px solid var(--summit-blue);
     background-color: var(--med-priority);
     margin: 15px;
+    transition: all 0.5s;
+}
+.bmed:hover {
+    border-color: var(--summit-white);
+    
 }
 .clow {
     width: 70px;
     height: 4vh;
     border-radius: 30px;
-    border: 3px solid var(--summit-blue-transparent);
+    border: 3px solid var(--summit-blue);
     background-color: var(--low-priority);
     margin: 15px;
+    transition: all 0.4s;
+}
+.clow:hover {
+    border-color: var(--summit-white);
+    
 }
 /*Goals Page Properties*/
 /*-------------------------------------------------------------*/
@@ -568,7 +573,7 @@ body {
     display: grid;
     grid-template-columns: auto;
     margin: 138px 30px 30px 30px;
-    grid-template-rows: auto;
+    grid-template-rows: 25% 75%;
     gap: 20px;
     justify-content: center;
     gap: 20px;
@@ -593,16 +598,17 @@ body {
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 30px;
+    align-self: center;
 }
 #goalsHeader button {
     background-color: var(--summit-blue);
+    border: 3px solid var(--summit-white);
     font-size: 1.2rem;
     width: 10rem;
     height: 3rem;
     border: 3px solid;
     margin: 0 40px;
     border-radius: 30px;
-    border-color: transparent;
     color: var(--summit-white);
     display: flex;
     justify-content: center;
@@ -613,6 +619,7 @@ body {
 #goalsHeader button:hover {
     background-color: var(--summit-white);
     color: var(--summit-blue);
+    border-color: var(--summit-white);
 }
 #goalsContainer {
     width: 100%;
