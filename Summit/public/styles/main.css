@@ -223,6 +223,8 @@ body {
     grid-template-rows: 45vh auto;
     gap: 50px;
     justify-content: center;
+    user-select: none;
+    
 }
 .welcomeGrid {
     grid-column: 1;
@@ -233,6 +235,7 @@ body {
     justify-content: center;
     gap: 30px;
     padding: 20px;
+    user-select: none;
 }
 #welcomeText {
     grid-column: 1 / span 2;
@@ -244,6 +247,7 @@ body {
     align-items: center;
     flex-shrink: 1;
     font-size: 7rem;
+    user-select: none;
 }
 .welcomeGrid button {
     grid-column: 1 / span 2;
@@ -285,6 +289,7 @@ body {
     justify-self: center;
     width: 100%;
     margin: 50px;
+    user-select: none;
 }
 #quote {
     justify-self: center;
@@ -297,6 +302,7 @@ body {
     width: 100%;
     text-align: center;
     padding: 0 80px;
+    user-select: none;
 }
 .pomodoroGrid {
     grid-column: 2;
@@ -306,6 +312,7 @@ body {
     gap: 30px;
     padding: 20px;
     align-self: start;
+    user-select: none;
 }
 .outerRing {
     background-color: var(--bayern-blue);
